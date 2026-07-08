@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Sora, Manrope, IBM_Plex_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const sora = Sora({
@@ -59,6 +60,7 @@ export default function RootLayout({
         className={`${sora.variable} ${manrope.variable} ${plexMono.variable} antialiased`}
       >
         {children}
+        <Analytics />
       </body>
     </html>
   );
