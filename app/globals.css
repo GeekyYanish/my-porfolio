@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+/*
+  Blueprint palette — the entire site draws from these tokens.
+  Edit here to retheme; components only reference token classes.
+*/
+@theme {
+  /* dark blueprint ground */
+  --color-bp-950: #101b31;
+  --color-bp-900: #14213a;
+  --color-bp-800: #1a2b4a;
+  --color-bp-700: #223759;
+  --color-bp-600: #2d4671;
+
+  /* text */
+  --color-ink: #f8fafc;
+  --color-ink-muted: #cbd5e1;
+  --color-ink-faint: #8fa3c0;
+
+  /* line work */
+  --color-line: #e2e8f0;
+
+  /* signal accents */
+  --color-accent: #22d3ee;
+  --color-teal-data: #14b8a6;
+  --color-gold: #f59e0b;
+  --color-warn: #f97316;
+
+  /* light "paper" sheet sections */
+  --color-paper: #f8fafc;
+  --color-paper-ink: #0f172a;
+  --color-paper-line: #1a2b4a;
+  --color-paper-accent: #0891b2;
+}
+
+@theme inline {
+  --font-heading: var(--font-sora);
+  --font-body: var(--font-manrope);
+  --font-mono: var(--font-plex-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background-color: var(--color-bp-800);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-bp-900);
+}
+
+/* visible keyboard focus everywhere */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+/* hairline utility used across panels */
+@utility hairline {
+  border-color: color-mix(in srgb, var(--color-line) 18%, transparent);
+}
+
+/* blueprint corner tick marks on panels */
+@utility corner-ticks {
+  position: relative;
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--color-line) 55%, transparent) 0,
+      color-mix(in srgb, var(--color-line) 55%, transparent) 100%
+    ),
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--color-line) 55%, transparent) 0,
+      color-mix(in srgb, var(--color-line) 55%, transparent) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-line) 55%, transparent) 0,
+      color-mix(in srgb, var(--color-line) 55%, transparent) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-line) 55%, transparent) 0,
+      color-mix(in srgb, var(--color-line) 55%, transparent) 100%
+    );
+  background-repeat: no-repeat;
+  background-size:
+    10px 1px,
+    10px 1px,
+    1px 10px,
+    1px 10px;
+  background-position:
+    top left,
+    bottom right,
+    top left,
+    bottom right;
+}
