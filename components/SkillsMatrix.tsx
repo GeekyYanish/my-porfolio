@@ -11,7 +11,7 @@ export default function SkillsMatrix() {
   return (
     <Section
       id="skills"
-      sheet="SHT 05"
+      sheet="SHT 04"
       label="Capability Matrix"
       title="Skills, wired to evidence"
       intro="Grouped by capability, not listed flat — and every group points at the project where the skill was actually used."

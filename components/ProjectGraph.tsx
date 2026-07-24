@@ -1,41 +1,17 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { MoveRight } from "lucide-react";
 import type { CaseStudy } from "@/data/projects";
+import { useDraw, useAppear } from "@/components/motion";
 
 /**
  * Bespoke schematic per case study. Each variant is a different
  * drawing: a real-time flow, a ledger graph, a measured pipeline,
  * an experiment log, and a peer mesh. On small screens the SVG is
- * replaced by an accessible stacked flow list.
+ * replaced by an accessible stacked flow list. The line-draw/appear
+ * primitives live in components/motion.ts and are shared site-wide.
  */
-
-function useDraw() {
-  const reduceMotion = useReducedMotion();
-  return (delay: number) =>
-    reduceMotion
-      ? {}
-      : {
-          initial: { pathLength: 0, opacity: 0 },
-          whileInView: { pathLength: 1, opacity: 1 },
-          viewport: { once: true, margin: "-40px" },
-          transition: { duration: 0.9, delay, ease: "easeInOut" as const },
-        };
-}
-
-function useAppear() {
-  const reduceMotion = useReducedMotion();
-  return (delay: number) =>
-    reduceMotion
-      ? {}
-      : {
-          initial: { opacity: 0 },
-          whileInView: { opacity: 1 },
-          viewport: { once: true, margin: "-40px" },
-          transition: { duration: 0.45, delay },
-        };
-}
 
 /** Procto — real-time event flow with a signal trace underneath. */
 function ProctoDiagram({ flow }: { flow: string[] }) {

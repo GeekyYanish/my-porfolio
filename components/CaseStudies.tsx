@@ -7,7 +7,7 @@ export default function CaseStudies() {
   return (
     <Section
       id="work"
-      sheet="SHT 04"
+      sheet="SHT 03"
       label="Featured Drawings"
       title="Case studies"
       intro="Five systems, five different schematics — a real-time event flow, a ledger graph, a measured data pipeline, an experiment log, and a peer mesh. Each drawn the way the system actually works."

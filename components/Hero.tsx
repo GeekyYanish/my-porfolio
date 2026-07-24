@@ -2,6 +2,7 @@ import { ArrowDown, Download, Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/BrandIcons";
 import { site } from "@/data/site";
 import HeroSchematic from "@/components/HeroSchematic";
+import HeroHeadline from "@/components/HeroHeadline";
 import Reveal from "@/components/Reveal";
 
 export default function Hero() {
@@ -10,17 +11,16 @@ export default function Hero() {
       <div className="mx-auto grid max-w-6xl gap-12 px-5 pb-16 sm:px-8 md:pb-24 lg:grid-cols-[1.05fr_1fr] lg:items-center">
         <div>
           <Reveal>
-            <p className="font-mono text-[11px] tracking-[0.25em] text-accent uppercase">
+            <p className="flex items-center gap-2.5 font-mono text-[11px] tracking-[0.25em] text-accent uppercase">
+              <span
+                aria-hidden="true"
+                className="hero-leader inline-block h-px w-8 bg-accent/60"
+              />
               SHT 00 · Yanish Rai — Bengaluru, IN
             </p>
           </Reveal>
           <Reveal delay={0.08}>
-            <h1 className="mt-5 font-heading text-4xl leading-tight font-bold text-ink sm:text-5xl md:text-[3.4rem]">
-              I build systems where{" "}
-              <span className="text-accent">trust</span>,{" "}
-              <span className="text-teal-data">data</span>, and product
-              engineering meet.
-            </h1>
+            <HeroHeadline />
           </Reveal>
           <Reveal delay={0.16}>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-ink-muted sm:text-lg">
@@ -31,16 +31,35 @@ export default function Hero() {
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
                 href="#work"
-                className="inline-flex items-center gap-2 bg-accent px-5 py-2.5 font-mono text-sm font-medium text-bp-900 transition-colors hover:bg-accent/85"
+                className="group inline-flex items-center gap-2 bg-accent px-5 py-2.5 font-mono text-sm font-medium text-bp-900 transition-colors hover:bg-accent/85"
               >
-                View Projects <ArrowDown size={15} aria-hidden="true" />
+                View Projects{" "}
+                <ArrowDown
+                  size={15}
+                  aria-hidden="true"
+                  className="transition-transform duration-200 group-hover:translate-y-0.5 motion-reduce:transition-none"
+                />
               </a>
               <a
                 href={site.resumePath}
                 download
-                className="inline-flex items-center gap-2 border border-line/40 px-5 py-2.5 font-mono text-sm text-ink transition-colors hover:border-accent hover:text-accent"
+                className="group relative inline-flex items-center gap-2 border border-line/40 px-5 py-2.5 font-mono text-sm text-ink transition-colors hover:border-accent hover:text-accent"
               >
-                <Download size={15} aria-hidden="true" /> Download Resume
+                {/* blueprint corner ticks that complete on hover */}
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -top-px -left-px h-2 w-2 border-t border-l border-accent opacity-0 transition-opacity duration-200 group-hover:opacity-100 motion-reduce:transition-none"
+                />
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -right-px -bottom-px h-2 w-2 border-r border-b border-accent opacity-0 transition-opacity duration-200 group-hover:opacity-100 motion-reduce:transition-none"
+                />
+                <Download
+                  size={15}
+                  aria-hidden="true"
+                  className="transition-transform duration-200 group-hover:-translate-y-0.5 motion-reduce:transition-none"
+                />{" "}
+                Download Resume
               </a>
             </div>
           </Reveal>
@@ -51,7 +70,7 @@ export default function Hero() {
                   href={site.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-ink-muted transition-colors hover:text-accent"
+                  className="inline-flex items-center gap-1.5 text-ink-muted underline-offset-4 transition-colors hover:text-accent hover:underline"
                 >
                   <GithubIcon size={15} /> GitHub
                 </a>
@@ -61,7 +80,7 @@ export default function Hero() {
                   href={site.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-ink-muted transition-colors hover:text-accent"
+                  className="inline-flex items-center gap-1.5 text-ink-muted underline-offset-4 transition-colors hover:text-accent hover:underline"
                 >
                   <LinkedinIcon size={15} /> LinkedIn
                 </a>
@@ -69,7 +88,7 @@ export default function Hero() {
               <li>
                 <a
                   href={`mailto:${site.email}`}
-                  className="inline-flex items-center gap-1.5 text-ink-muted transition-colors hover:text-accent"
+                  className="inline-flex items-center gap-1.5 text-ink-muted underline-offset-4 transition-colors hover:text-accent hover:underline"
                 >
                   <Mail size={15} aria-hidden="true" /> Email
                 </a>

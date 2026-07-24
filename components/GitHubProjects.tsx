@@ -15,7 +15,7 @@ export default function GitHubProjects() {
   return (
     <Section
       id="github"
-      sheet="SHT 06"
+      sheet="SHT 05"
       label="Drawing Register"
       title="GitHub index"
       intro="A curated register of public repositories — flagship builds first, coursework and experiments labeled as exactly that."

@@ -114,7 +114,7 @@ export default function ExperienceTimeline() {
   return (
     <Section
       id="experience"
-      sheet="SHT 03"
+      sheet="SHT 02"
       label="Project Log"
       title="Experience"
       intro="Logged in reverse chronological order, the way a drawing revision table reads — most recent revision first."

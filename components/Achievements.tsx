@@ -10,7 +10,7 @@ export default function Achievements() {
   return (
     <Section
       id="achievements"
-      sheet="SHT 08"
+      sheet="SHT 07"
       label="Milestones"
       title="Achievements & leadership"
     >

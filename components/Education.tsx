@@ -7,7 +7,7 @@ export default function Education() {
   return (
     <Section
       id="education"
-      sheet="SHT 07"
+      sheet="SHT 06"
       label="Credentials"
       title="Education"
     >

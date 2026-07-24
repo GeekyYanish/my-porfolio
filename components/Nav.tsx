@@ -6,12 +6,11 @@ import { site } from "@/data/site";
 
 const links = [
   { href: "#identity", label: "Identity", index: "01" },
-  { href: "#metrics", label: "Metrics", index: "02" },
-  { href: "#experience", label: "Experience", index: "03" },
-  { href: "#work", label: "Case Studies", index: "04" },
-  { href: "#skills", label: "Skills", index: "05" },
-  { href: "#github", label: "GitHub", index: "06" },
-  { href: "#contact", label: "Contact", index: "07" },
+  { href: "#experience", label: "Experience", index: "02" },
+  { href: "#work", label: "Case Studies", index: "03" },
+  { href: "#skills", label: "Skills", index: "04" },
+  { href: "#github", label: "GitHub", index: "05" },
+  { href: "#contact", label: "Contact", index: "06" },
 ];
 
 export default function Nav() {

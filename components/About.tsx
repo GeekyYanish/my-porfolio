@@ -4,7 +4,7 @@ import Reveal from "@/components/Reveal";
 
 export default function About() {
   return (
-    <Section id="about" sheet="SHT 09" label="General Notes" title="About">
+    <Section id="about" sheet="SHT 08" label="General Notes" title="About">
       <Reveal>
         <div className="corner-ticks max-w-3xl border border-line/15 bg-bp-900/60 p-6 sm:p-8">
           <p className="text-base leading-relaxed text-ink-muted sm:text-lg">

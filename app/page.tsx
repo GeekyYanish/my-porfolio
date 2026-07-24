@@ -2,7 +2,6 @@ import SchematicBackground from "@/components/SchematicBackground";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import TrustDataSystems from "@/components/TrustDataSystems";
-import MetricCallouts from "@/components/MetricCallouts";
 import ExperienceTimeline from "@/components/ExperienceTimeline";
 import CaseStudies from "@/components/CaseStudies";
 import SkillsMatrix from "@/components/SkillsMatrix";
@@ -21,7 +20,6 @@ export default function Home() {
       <main>
         <Hero />
         <TrustDataSystems />
-        <MetricCallouts />
         <ExperienceTimeline />
         <CaseStudies />
         <SkillsMatrix />

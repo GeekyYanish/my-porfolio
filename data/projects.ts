@@ -243,30 +243,4 @@ export const repos: Repo[] = [
     href: "https://github.com/GeekyYanish/P2P_Library",
     note: "Systems experiment",
   },
-  {
-    index: "R-06",
-    name: "peer_to_peer_lib",
-    description: "Companion peer-to-peer experiments in TypeScript.",
-    stack: ["TypeScript"],
-    href: "https://github.com/GeekyYanish/peer_to_peer_lib",
-    note: "Systems experiment",
-  },
-  {
-    index: "R-07",
-    name: "dog-breed-explorer",
-    description:
-      "API-driven explorer for browsing dog breeds — a compact front-end exercise.",
-    stack: ["JavaScript", "REST API"],
-    href: "https://github.com/GeekyYanish/dog-breed-explorer",
-    note: "Front-end exercise",
-  },
-  {
-    index: "R-08",
-    name: "Full_stack_class",
-    description:
-      "Coursework and practice builds from full-stack development classes.",
-    stack: ["JavaScript", "Node.js"],
-    href: "https://github.com/GeekyYanish/Full_stack_class",
-    note: "Coursework",
-  },
 ];

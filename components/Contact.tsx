@@ -32,7 +32,7 @@ export default function Contact() {
   return (
     <Section
       id="contact"
-      sheet="SHT 10"
+      sheet="SHT 09"
       label="Signal Terminal"
       title="Contact"
       intro={site.contactCta}

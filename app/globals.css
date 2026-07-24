@@ -68,6 +68,70 @@ body {
   border-radius: 1px;
 }
 
+/* hero eyebrow leader line: plots out from zero width on load */
+.hero-leader {
+  transform-origin: left center;
+  animation: leader-draw 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+}
+
+@keyframes leader-draw {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+/*
+  Background atmosphere: a single faint scanline drifts down the drawing
+  surface, and a slow "survey point" pulse breathes at the top. Both are
+  near-imperceptible and add depth without pulling focus. Disabled wholesale
+  under reduced motion below.
+*/
+.bp-scanline {
+  animation: scanline-drift 14s linear infinite;
+}
+
+@keyframes scanline-drift {
+  from {
+    transform: translateY(-8vh);
+  }
+  to {
+    transform: translateY(108vh);
+  }
+}
+
+.bp-survey {
+  animation: survey-pulse 6s ease-in-out infinite;
+}
+
+@keyframes survey-pulse {
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-leader,
+  .bp-scanline,
+  .bp-survey {
+    animation: none;
+  }
+  .hero-leader {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
 /* hairline utility used across panels */
 @utility hairline {
   border-color: color-mix(in srgb, var(--color-line) 18%, transparent);

@@ -7,7 +7,17 @@ export const site = {
   name: "Yanish Rai",
   shortName: "YR",
   location: "Bengaluru, Karnataka, India",
-  headline: "I build systems where trust, data, and product engineering meet.",
+  headline: "From data to actionable insights.",
+  // Structured for the hero <h1>: accent words carry a token color and a
+  // drawn measurement underline. Keep in sync with `headline` above (used
+  // for SEO/metadata). See components/Hero.tsx.
+  headlineParts: [
+    { text: "From " },
+    { text: "data", accent: "cyan" as const },
+    { text: " to " },
+    { text: "actionable", accent: "teal" as const },
+    { text: " insights." },
+  ],
   subheadline:
     "MCA student from CHRIST University building data-rich applications, AI evaluation workflows, real-time proctoring systems, and transparent Web3 products.",
   supportLine:

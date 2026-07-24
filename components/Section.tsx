@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Reveal from "@/components/Reveal";
+import DimensionRule from "@/components/DimensionRule";
 
 /**
  * Section wrapper styled like a sheet of an engineering drawing:
@@ -59,18 +60,8 @@ export default function Section({
                 {intro}
               </p>
             ) : null}
-            {/* dimension rule with end ticks */}
-            <div className="mt-6 flex items-center" aria-hidden="true">
-              <span
-                className={`h-3 w-px ${isPaper ? "bg-paper-line/40" : "bg-line/40"}`}
-              />
-              <span
-                className={`h-px flex-1 ${isPaper ? "bg-paper-line/25" : "bg-line/20"}`}
-              />
-              <span
-                className={`h-3 w-px ${isPaper ? "bg-paper-line/40" : "bg-line/40"}`}
-              />
-            </div>
+            {/* dimension rule with end ticks — draws in on scroll */}
+            <DimensionRule isPaper={isPaper} />
           </header>
         </Reveal>
         {children}
