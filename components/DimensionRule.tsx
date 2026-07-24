@@ -8,10 +8,11 @@ import { motion, useReducedMotion } from "framer-motion";
  * heading scrolls into view — the same line-draw idiom used across the
  * hero and case-study diagrams. Static under reduced motion.
  */
-export default function DimensionRule({ isPaper }: { isPaper: boolean }) {
+
+export default function DimensionRule() {
   const reduceMotion = useReducedMotion();
-  const tick = isPaper ? "bg-paper-line/40" : "bg-line/40";
-  const rule = isPaper ? "bg-paper-line/25" : "bg-line/20";
+  const tick = "bg-line/40";
+  const rule = "bg-line/20";
 
   const grow = reduceMotion
     ? undefined

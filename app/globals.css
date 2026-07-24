@@ -25,12 +25,6 @@
   --color-teal-data: #14b8a6;
   --color-gold: #f59e0b;
   --color-warn: #f97316;
-
-  /* light "paper" sheet sections */
-  --color-paper: #f8fafc;
-  --color-paper-ink: #0f172a;
-  --color-paper-line: #1a2b4a;
-  --color-paper-accent: #0891b2;
 }
 
 @theme inline {
@@ -135,6 +129,28 @@ body {
 /* hairline utility used across panels */
 @utility hairline {
   border-color: color-mix(in srgb, var(--color-line) 18%, transparent);
+}
+
+/*
+  Frosted drawing-film panel. Sits over the fixed schematic grid so the
+  grid stays faintly visible through the blur, like a sheet of vellum laid
+  on the drawing. Backdrop-blur is progressively enhanced: browsers without
+  it still get the translucent ground and hairline border.
+*/
+@utility glass-panel {
+  /* `background-color` + `background-image` rather than the `background`
+     shorthand: the shorthand resets background-image and would wipe out the
+     tick marks when combined with `corner-ticks`. */
+  background-color: color-mix(in srgb, var(--color-bp-700) 30%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-line) 14%, transparent);
+  box-shadow:
+    inset 0 1px 0 0 color-mix(in srgb, var(--color-line) 12%, transparent),
+    0 8px 32px -12px rgba(9, 16, 30, 0.55);
+
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    -webkit-backdrop-filter: blur(10px) saturate(130%);
+    backdrop-filter: blur(10px) saturate(130%);
+  }
 }
 
 /* blueprint corner tick marks on panels */
