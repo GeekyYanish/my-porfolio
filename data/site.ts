@@ -7,17 +7,11 @@ export const site = {
   name: "Yanish Rai",
   shortName: "YR",
   location: "Bengaluru, Karnataka, India",
-  headline: "From data to actionable insights.",
-  // Structured for the hero <h1>: accent words carry a token color and a
-  // drawn measurement underline. Keep in sync with `headline` above (used
-  // for SEO/metadata). See components/Hero.tsx.
-  headlineParts: [
-    { text: "From " },
-    { text: "data", accent: "cyan" as const },
-    { text: " to " },
-    { text: "actionable", accent: "teal" as const },
-    { text: " insights." },
-  ],
+  /** Short form used in the hero eyebrow and footer title block. */
+  neighborhood: "Bengaluru",
+  /** Fills the blank in "Your Friendly Neighborhood ______". */
+  profession: "Full-Stack Developer",
+  headline: "Your Friendly Neighborhood Full-Stack Developer.",
   subheadline:
     "MCA student from CHRIST University building data-rich applications, AI evaluation workflows, real-time proctoring systems, and transparent Web3 products.",
   supportLine:
@@ -40,7 +34,41 @@ export const site = {
     "AI Application Developer",
     "Web3 / FinTech Builder",
   ],
+  /**
+   * Master switch for Lenis momentum scrolling. Set to false to fall back to
+   * the browser's native scroll everywhere. (Lenis is additionally disabled
+   * under `prefers-reduced-motion` and on coarse pointers regardless.)
+   */
+  smoothScroll: true,
 };
+
+/**
+ * The origin story, told in comic panels. Each beat is one panel in the
+ * About section — `caption` is the boxed narration, `line` the spoken beat.
+ */
+export type OriginBeat = {
+  panel: string;
+  caption: string;
+  line: string;
+};
+
+export const originBeats: OriginBeat[] = [
+  {
+    panel: "01",
+    caption: "Bengaluru. A campus lab, well past closing time.",
+    line: "Started where product, data, and engineering overlap — and kept building there.",
+  },
+  {
+    panel: "02",
+    caption: "The work spread out fast.",
+    line: "Evaluation infrastructure, AI proctoring, Web3 donation tracking, security audits, full-stack apps.",
+  },
+  {
+    panel: "03",
+    caption: "One rule stuck.",
+    line: "Ship things that are technically clear, measurable, and actually useful.",
+  },
+];
 
 export type EducationEntry = {
   institution: string;

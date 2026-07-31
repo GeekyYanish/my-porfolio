@@ -1,6 +1,10 @@
 /**
- * Featured case studies and the curated GitHub repo register.
- * `diagram` selects the bespoke schematic each case study renders.
+ * Featured case studies, the curated GitHub register, and the unified
+ * `projectEntries` list the Projects grid actually renders.
+ *
+ * `panel` selects the bespoke comic-panel artwork each project draws
+ * (see components/art/ProjectPanelArt.tsx) — adding a value to that union
+ * means adding a matching entry to the `panelArt` lookup there.
  */
 
 export type CaseStudyDetail = {
@@ -12,6 +16,23 @@ export type CaseStudyDetail = {
   next: string;
 };
 
+/** Filter facets for the Projects grid. Every value must be used by at
+ *  least one entry, or the filter bar renders a chip that matches nothing. */
+export type ProjectCategory =
+  | "Full-Stack"
+  | "AI"
+  | "Data"
+  | "Web3"
+  | "Systems";
+
+export type PanelArt =
+  | "procto"
+  | "dochain"
+  | "odyssey"
+  | "harness"
+  | "mllab"
+  | "p2p";
+
 export type CaseStudy = {
   id: string;
   figure: string;
@@ -20,7 +41,7 @@ export type CaseStudy = {
   tech: string[];
   summary: string;
   points: string[];
-  diagram: "procto" | "dochain" | "harness" | "mllab" | "p2p";
+  panel: PanelArt;
   diagramFlow: string[];
   links: { label: string; href: string }[];
   detail?: CaseStudyDetail;
@@ -50,7 +71,7 @@ export const caseStudies: CaseStudy[] = [
       "Built real-time monitoring workflows over Socket.io",
       "Generated exam content from uploaded documents using Ollama",
     ],
-    diagram: "procto",
+    panel: "procto",
     diagramFlow: [
       "Candidate",
       "Webcam Events",
@@ -62,8 +83,7 @@ export const caseStudies: CaseStudy[] = [
     detail: {
       problem:
         "Online exams are easy to compromise: candidates switch windows, look away, or bring help off-camera. Institutions need integrity signals that are continuous and explainable, not a single pass/fail webcam check.",
-      role:
-        "Designed and built the platform end-to-end: real-time event pipeline, behavioral analytics engine, exam authoring with AI-generated content, and the examiner dashboard.",
+      role: "Designed and built the platform end-to-end: real-time event pipeline, behavioral analytics engine, exam authoring with AI-generated content, and the examiner dashboard.",
       architecture:
         "React front end streams webcam, focus, and window-blur events over Socket.io to a Node.js engine. Events are persisted in PostgreSQL via Prisma and scored by a behavioral analytics layer that aggregates signals into a per-candidate integrity score. Ollama generates exam questions from uploaded source documents.",
       features: [
@@ -74,8 +94,7 @@ export const caseStudies: CaseStudy[] = [
       ],
       impact:
         "Handled 50+ concurrent proctored users with live event scoring, giving examiners a continuous, explainable view of session integrity instead of raw video review.",
-      next:
-        "Calibrate score weightings against labeled sessions, add appeal/review workflows for flagged candidates, and load-test the event pipeline beyond the current concurrency ceiling.",
+      next: "Calibrate score weightings against labeled sessions, add appeal/review workflows for flagged candidates, and load-test the event pipeline beyond the current concurrency ceiling.",
     },
   },
   {
@@ -99,7 +118,7 @@ export const caseStudies: CaseStudy[] = [
       "Wallet integration via Web3Modal and Ethers.js",
       "Web3 onboarding designed for non-crypto-native donors",
     ],
-    diagram: "dochain",
+    panel: "dochain",
     diagramFlow: [
       "Donor Wallet",
       "Campaign Contract",
@@ -128,7 +147,7 @@ export const caseStudies: CaseStudy[] = [
       "50+ business scenarios benchmarked against an automated scoring rubric",
       "Schema redesign reduced data ingestion errors by 35%",
     ],
-    diagram: "harness",
+    panel: "harness",
     diagramFlow: [
       "Mock Entities",
       "Transaction Events",
@@ -153,7 +172,7 @@ export const caseStudies: CaseStudy[] = [
       "Data cleaning and exploratory analysis workflows",
       "Documented experiment logs per lab session",
     ],
-    diagram: "mllab",
+    panel: "mllab",
     diagramFlow: ["Dataset", "Preprocess", "Train", "Evaluate", "Log"],
     links: [
       {
@@ -175,7 +194,7 @@ export const caseStudies: CaseStudy[] = [
       "Parallel implementations in Go and TypeScript",
       "Groundwork for decentralized application patterns",
     ],
-    diagram: "p2p",
+    panel: "p2p",
     diagramFlow: ["Peer A", "Discovery", "Peer B", "Exchange"],
     links: [
       {
@@ -190,7 +209,7 @@ export const caseStudies: CaseStudy[] = [
   },
 ];
 
-/** Curated GitHub register — the "drawing index" of public work. */
+/** Curated GitHub register — the public repositories behind the work. */
 export type Repo = {
   index: string;
   name: string;
@@ -243,4 +262,122 @@ export const repos: Repo[] = [
     href: "https://github.com/GeekyYanish/P2P_Library",
     note: "Systems experiment",
   },
+];
+
+/**
+ * One card per distinct project. The five case studies plus HBL_ODYSSEY —
+ * the only repo in the register that isn't already the subject of a case
+ * study. Entries carrying a `study` open the full case-study reader.
+ */
+export type ProjectEntry = {
+  id: string;
+  index: string;
+  title: string;
+  /** Short line under the title on the card face. */
+  tagline: string;
+  blurb: string;
+  tech: string[];
+  categories: ProjectCategory[];
+  accent: "web" | "sense" | "gold";
+  panel: PanelArt;
+  links: { label: string; href: string }[];
+  study?: CaseStudy;
+  note?: string;
+};
+
+const study = (id: string) => {
+  const found = caseStudies.find((c) => c.id === id);
+  if (!found) throw new Error(`Unknown case study id: ${id}`);
+  return found;
+};
+
+export const projectEntries: ProjectEntry[] = [
+  {
+    id: "procto",
+    index: "FIG. 01",
+    title: "Procto",
+    tagline: "AI-powered proctoring platform",
+    blurb: study("procto").summary,
+    tech: study("procto").tech,
+    categories: ["Full-Stack", "AI"],
+    accent: "web",
+    panel: "procto",
+    links: study("procto").links,
+    study: study("procto"),
+  },
+  {
+    id: "dochain",
+    index: "FIG. 02",
+    title: "Dochain",
+    tagline: "Decentralized crowdfunding & donation tracking",
+    blurb: study("dochain").summary,
+    tech: study("dochain").tech,
+    categories: ["Web3", "Full-Stack"],
+    accent: "sense",
+    panel: "dochain",
+    links: study("dochain").links,
+    study: study("dochain"),
+  },
+  {
+    id: "harness",
+    index: "FIG. 03",
+    title: "Analytics Agent Evaluation Harness",
+    tagline: "Adobe internship — data & evaluation infrastructure",
+    blurb: study("harness").summary,
+    tech: study("harness").tech,
+    categories: ["Data", "AI"],
+    accent: "gold",
+    panel: "harness",
+    links: study("harness").links,
+    study: study("harness"),
+    note: "Internal — anonymized case study",
+  },
+  {
+    id: "mllab",
+    index: "FIG. 04",
+    title: "Machine Learning Lab",
+    tagline: "Applied ML & analytics notebooks",
+    blurb: study("mllab").summary,
+    tech: study("mllab").tech,
+    categories: ["Data"],
+    accent: "sense",
+    panel: "mllab",
+    links: study("mllab").links,
+    study: study("mllab"),
+  },
+  {
+    id: "p2p",
+    index: "FIG. 05",
+    title: "Peer-to-Peer Library",
+    tagline: "Networking & backend systems experiments",
+    blurb: study("p2p").summary,
+    tech: study("p2p").tech,
+    categories: ["Systems"],
+    accent: "web",
+    panel: "p2p",
+    links: study("p2p").links,
+    study: study("p2p"),
+  },
+  {
+    id: "odyssey",
+    index: "R-03",
+    title: "HBL_ODYSSEY",
+    tagline: "Hackathon build — transparent Web3 donation flows",
+    blurb: repos[2].description,
+    tech: repos[2].stack,
+    categories: ["Web3"],
+    accent: "gold",
+    panel: "odyssey",
+    links: [{ label: "GitHub", href: repos[2].href }],
+    note: repos[2].note,
+  },
+];
+
+/** Filter chips, in display order. "All" is prepended by the component. */
+export const projectCategories: ProjectCategory[] = [
+  "Full-Stack",
+  "AI",
+  "Data",
+  "Web3",
+  "Systems",
 ];

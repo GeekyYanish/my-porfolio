@@ -1,108 +1,95 @@
-import { ArrowDown, Download, Mail } from "lucide-react";
+import { ArrowDown, ArrowUpRight, MapPin } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/BrandIcons";
-import { site } from "@/data/site";
-import HeroSchematic from "@/components/HeroSchematic";
+import Container from "@/components/Container";
 import HeroHeadline from "@/components/HeroHeadline";
+import HeroSky from "@/components/HeroSky";
+import MagneticButton from "@/components/MagneticButton";
 import Reveal from "@/components/Reveal";
+import SwingIntro from "@/components/SwingIntro";
+import { site } from "@/data/site";
 
 export default function Hero() {
   return (
-    <section id="top" className="relative z-10 pt-24 md:pt-28">
-      <div className="mx-auto grid max-w-6xl gap-12 px-5 pb-16 sm:px-8 md:pb-24 lg:grid-cols-[1.05fr_1fr] lg:items-center">
-        <div>
-          <Reveal>
-            <p className="flex items-center gap-2.5 font-mono text-[11px] tracking-[0.25em] text-accent uppercase">
-              <span
-                aria-hidden="true"
-                className="hero-leader inline-block h-px w-8 bg-accent/60"
-              />
-              SHT 00 · Yanish Rai — Bengaluru, IN
+    <section
+      id="top"
+      className="relative flex min-h-[100svh] items-center overflow-hidden pt-24 pb-20 sm:pt-28"
+    >
+      <HeroSky />
+      <SwingIntro />
+
+      <Container className="relative z-10">
+        <div className="max-w-4xl">
+          <Reveal variant="fade">
+            <p className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[0.7rem] tracking-[0.24em] text-ink-faint uppercase sm:text-xs">
+              <span className="flex items-center gap-1.5 text-sense-400">
+                <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
+                {site.neighborhood}, IN
+              </span>
+              <span aria-hidden="true" className="h-px w-6 bg-ink/25" />
+              <span>MCA @ CHRIST University</span>
             </p>
           </Reveal>
-          <Reveal delay={0.08}>
-            <HeroHeadline />
-          </Reveal>
-          <Reveal delay={0.16}>
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-ink-muted sm:text-lg">
+
+          <HeroHeadline />
+
+          <Reveal delay={0.66} className="mt-7 max-w-2xl">
+            <p className="text-base leading-relaxed text-ink-muted sm:text-lg">
               {site.subheadline}
             </p>
           </Reveal>
-          <Reveal delay={0.24}>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <a
-                href="#work"
-                className="group inline-flex items-center gap-2 bg-accent px-5 py-2.5 font-mono text-sm font-medium text-bp-900 transition-colors hover:bg-accent/85"
-              >
-                View Projects{" "}
-                <ArrowDown
-                  size={15}
-                  aria-hidden="true"
-                  className="transition-transform duration-200 group-hover:translate-y-0.5 motion-reduce:transition-none"
-                />
-              </a>
-              <a
-                href={site.resumePath}
-                download
-                className="group relative inline-flex items-center gap-2 border border-line/40 px-5 py-2.5 font-mono text-sm text-ink transition-colors hover:border-accent hover:text-accent"
-              >
-                {/* blueprint corner ticks that complete on hover */}
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute -top-px -left-px h-2 w-2 border-t border-l border-accent opacity-0 transition-opacity duration-200 group-hover:opacity-100 motion-reduce:transition-none"
-                />
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute -right-px -bottom-px h-2 w-2 border-r border-b border-accent opacity-0 transition-opacity duration-200 group-hover:opacity-100 motion-reduce:transition-none"
-                />
-                <Download
-                  size={15}
-                  aria-hidden="true"
-                  className="transition-transform duration-200 group-hover:-translate-y-0.5 motion-reduce:transition-none"
-                />{" "}
-                Download Resume
-              </a>
+
+          <Reveal delay={0.76}>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+              <MagneticButton href="#work" tone="primary" senseRing>
+                View My Work
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              </MagneticButton>
+              <MagneticButton href="#contact" tone="ghost" senseRing>
+                Contact Me
+              </MagneticButton>
             </div>
           </Reveal>
-          <Reveal delay={0.32}>
-            <ul className="mt-6 flex flex-wrap items-center gap-5 font-mono text-[13px]">
+
+          <Reveal delay={0.86}>
+            <ul className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
               <li>
                 <a
                   href={site.github}
                   target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-ink-muted underline-offset-4 transition-colors hover:text-accent hover:underline"
+                  rel="noreferrer noopener"
+                  className="group flex items-center gap-2 font-mono text-xs tracking-[0.14em] text-ink-faint uppercase transition-colors hover:text-ink"
                 >
-                  <GithubIcon size={15} /> GitHub
+                  <GithubIcon className="h-4 w-4 transition-colors group-hover:text-web-400" />
+                  {site.githubHandle}
                 </a>
               </li>
               <li>
                 <a
                   href={site.linkedin}
                   target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-ink-muted underline-offset-4 transition-colors hover:text-accent hover:underline"
+                  rel="noreferrer noopener"
+                  className="group flex items-center gap-2 font-mono text-xs tracking-[0.14em] text-ink-faint uppercase transition-colors hover:text-ink"
                 >
-                  <LinkedinIcon size={15} /> LinkedIn
-                </a>
-              </li>
-              <li>
-                <a
-                  href={`mailto:${site.email}`}
-                  className="inline-flex items-center gap-1.5 text-ink-muted underline-offset-4 transition-colors hover:text-accent hover:underline"
-                >
-                  <Mail size={15} aria-hidden="true" /> Email
+                  <LinkedinIcon className="h-4 w-4 transition-colors group-hover:text-sense-400" />
+                  {site.linkedinHandle}
                 </a>
               </li>
             </ul>
           </Reveal>
         </div>
+      </Container>
 
-        <Reveal delay={0.2} className="relative">
-          <div className="corner-ticks border border-line/15 bg-bp-900/50 p-3 sm:p-5">
-            <HeroSchematic />
-          </div>
-        </Reveal>
-      </div>
+      {/* scroll cue */}
+      <a
+        href="#about"
+        className="absolute inset-x-0 bottom-6 z-10 mx-auto flex w-fit flex-col items-center gap-2 font-mono text-[0.62rem] tracking-[0.3em] text-ink-faint uppercase transition-colors hover:text-sense-400"
+      >
+        Scroll
+        <ArrowDown
+          className="h-4 w-4 animate-bounce motion-reduce:animate-none"
+          aria-hidden="true"
+        />
+      </a>
     </section>
   );
 }

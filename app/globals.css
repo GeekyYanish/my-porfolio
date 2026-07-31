@@ -1,191 +1,404 @@
 @import "tailwindcss";
 
 /*
-  Blueprint palette — the entire site draws from these tokens.
-  Edit here to retheme; components only reference token classes.
+  "NIGHT SHIFT" — a comic-book web-slinger palette.
+
+  The whole site draws from these tokens; components reference token classes
+  and never raw hex. Retheming happens here and nowhere else.
+
+  Contrast note: web-red is reserved for LARGE display type, borders, and
+  glows. Body copy stays on ink / ink-muted over night-900 (~16:1 and ~9:1),
+  because #e01130 on near-black does not clear AA at body sizes.
 */
 @theme {
-  /* dark blueprint ground */
-  --color-bp-950: #101b31;
-  --color-bp-900: #14213a;
-  --color-bp-800: #1a2b4a;
-  --color-bp-700: #223759;
-  --color-bp-600: #2d4671;
+  /* night city ground */
+  --color-night-950: #05060f;
+  --color-night-900: #0a0d1f;
+  --color-night-800: #101635;
+  --color-night-700: #1a2350;
+  --color-night-600: #27336e;
+
+  /* web-slinger red — display type, linework, glow */
+  --color-web-600: #b3081f;
+  --color-web-500: #e01130;
+  --color-web-400: #ff2d4d;
+
+  /* spider-sense cyan — interaction, focus, live signal */
+  --color-sense-600: #0090ad;
+  --color-sense-500: #00c2e0;
+  --color-sense-400: #35e6ff;
+
+  /* newsprint + gutter ink, for inverted comic panels */
+  --color-paper: #f4f1ea;
+  --color-ink-black: #07070c;
 
   /* text */
-  --color-ink: #f8fafc;
-  --color-ink-muted: #cbd5e1;
-  --color-ink-faint: #8fa3c0;
+  --color-ink: #f6f7fb;
+  --color-ink-muted: #b6bfd8;
+  --color-ink-faint: #8592b4;
 
-  /* line work */
-  --color-line: #e2e8f0;
+  /* honours / hackathon accent */
+  --color-gold: #ffc53d;
 
-  /* signal accents */
-  --color-accent: #22d3ee;
-  --color-teal-data: #14b8a6;
-  --color-gold: #f59e0b;
-  --color-warn: #f97316;
+  /* motion curves — `ease-snap`, `ease-swing`, `ease-out-expo` */
+  --ease-snap: cubic-bezier(0.16, 1.36, 0.3, 1);
+  --ease-swing: cubic-bezier(0.37, 0, 0.28, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* hard comic-panel offsets, no blur — `shadow-panel` etc. */
+  --shadow-panel: 6px 6px 0 -1px var(--color-ink-black);
+  --shadow-panel-sm: 3px 3px 0 -1px var(--color-ink-black);
+  --shadow-glow-red: 0 0 28px -6px color-mix(in srgb, var(--color-web-500) 70%, transparent);
+  --shadow-glow-sense: 0 0 28px -6px color-mix(in srgb, var(--color-sense-500) 70%, transparent);
+
+  --radius-panel: 3px;
 }
 
-@theme inline {
-  --font-heading: var(--font-sora);
+/*
+  Plain `@theme`, not `@theme inline`: `inline` would stop Tailwind emitting
+  --font-heading as a real custom property, and the base rules below read it
+  directly. The next/font variables are declared on <html>, so these resolve
+  at :root.
+*/
+@theme {
+  --font-display: var(--font-bungee);
+  --font-heading: var(--font-anton);
   --font-body: var(--font-manrope);
   --font-mono: var(--font-plex-mono);
 }
 
-html {
-  scroll-behavior: smooth;
+/* ---------------------------------------------------------------- base */
+
+/*
+  These rules end up *unlayered* in the compiled sheet even when wrapped in
+  `@layer base`, and unlayered CSS beats every layer regardless of
+  specificity — so anything set here silently wins over the matching
+  utility. Keep it to properties no utility will ever need to override:
+  `line-height` and `letter-spacing` on headings belong on the elements
+  themselves, or a `leading-*` class further down the tree stops working.
+*/
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Nav is fixed — keep anchor targets clear of it. */
+    scroll-padding-top: 5.5rem;
+    background-color: var(--color-night-950);
+  }
+
+  body {
+    background-color: var(--color-night-950);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: var(--color-web-500);
+    color: var(--color-ink);
+  }
+
+  /*
+    Focus ring: a double ring — cyan core plus a dark halo — so it stays
+    visible on both the night ground and the inverted paper panels.
+  */
+  :focus-visible {
+    outline: 2px solid var(--color-sense-400);
+    outline-offset: 2px;
+    border-radius: 2px;
+    box-shadow: 0 0 0 4px
+      color-mix(in srgb, var(--color-ink-black) 75%, transparent);
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    text-transform: uppercase;
+  }
 }
 
+/* Below-fold sections skip layout/paint until they approach the viewport. */
+.defer-paint {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 700px;
+}
+
+/*
+  Native <dialog> reset. The case-study reader uses showModal() for its focus
+  trap and Escape handling, so the element itself just needs to get out of
+  the way and let the panel inside it do the styling.
+*/
+dialog {
+  max-width: min(100vw - 2rem, 48rem);
+  max-height: none;
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  overflow: visible;
+}
+
+dialog::backdrop {
+  background-color: color-mix(in srgb, var(--color-night-950) 82%, transparent);
+  backdrop-filter: blur(4px);
+}
+
+/*
+  Lenis drives the scroll position itself, so the native smooth behaviour has
+  to stand down while it's running or the two fight over every anchor jump.
+*/
+:root[data-lenis="on"] {
+  scroll-behavior: auto;
+}
+
+/* The custom cursor replaces the system one; the footer toggle restores it. */
+:root[data-cursor="custom"],
+:root[data-cursor="custom"] * {
+  cursor: none;
+}
+
+/* ---------------------------------------------------------- utilities */
+
+/* Ben-Day halftone dots. `--dot` and `--dot-size` are tunable per element. */
+@utility halftone {
+  --dot: color-mix(in srgb, var(--color-ink) 20%, transparent);
+  --dot-size: 6px;
+  background-image: radial-gradient(var(--dot) 0.9px, transparent 1px);
+  background-size: var(--dot-size) var(--dot-size);
+}
+
+@utility halftone-red {
+  --dot: color-mix(in srgb, var(--color-web-500) 55%, transparent);
+  --dot-size: 5px;
+  background-image: radial-gradient(var(--dot) 0.9px, transparent 1px);
+  background-size: var(--dot-size) var(--dot-size);
+}
+
+/*
+  Film grain. An inline feTurbulence data-URI over the whole surface —
+  cheap, resolution-independent, and it kills banding in the sky gradients.
+*/
+@utility grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity: 0.09;
+}
+
+/*
+  Comic panel: thick ink border and a hard offset shadow, no blur — the
+  look of a panel physically stacked on the page.
+
+  `background-color` + `background-image` are set separately rather than via
+  the `background` shorthand: the shorthand resets background-image, which
+  would wipe out `halftone` when the two utilities are combined.
+*/
+@utility comic-panel {
+  background-color: color-mix(in srgb, var(--color-night-800) 72%, transparent);
+  border: 2px solid color-mix(in srgb, var(--color-ink) 14%, transparent);
+  box-shadow: var(--shadow-panel);
+  border-radius: var(--radius-panel);
+}
+
+/* Frosted panel over the city — the night equivalent of vellum. */
+@utility web-glass {
+  background-color: color-mix(in srgb, var(--color-night-800) 55%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-ink) 12%, transparent);
+  border-radius: var(--radius-panel);
+
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    -webkit-backdrop-filter: blur(12px) saturate(135%);
+    backdrop-filter: blur(12px) saturate(135%);
+  }
+}
+
+/* CMYK misregistration — a cheap, very comic-book text treatment. */
+@utility chromatic {
+  text-shadow:
+    0.055em 0 0 color-mix(in srgb, var(--color-web-500) 85%, transparent),
+    -0.055em 0 0 color-mix(in srgb, var(--color-sense-500) 70%, transparent);
+}
+
+/* Inverted newsprint panel, for speech bubbles and callouts. */
+@utility paper-panel {
+  background-color: var(--color-paper);
+  color: var(--color-ink-black);
+  border: 2px solid var(--color-ink-black);
+  box-shadow: var(--shadow-panel-sm);
+  border-radius: var(--radius-panel);
+}
+
+/* ---------------------------------------------------------- keyframes */
+
+/* Spider-sense: a ring that expands and fades out of a focal element. */
+.sense-ring::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  border: 1.5px solid color-mix(in srgb, var(--color-sense-400) 70%, transparent);
+  opacity: 0;
+  pointer-events: none;
+  animation: sense-pulse 3.2s var(--ease-out-expo) infinite;
+}
+
+.sense-ring::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  border: 1.5px solid color-mix(in srgb, var(--color-sense-400) 55%, transparent);
+  opacity: 0;
+  pointer-events: none;
+  animation: sense-pulse 3.2s var(--ease-out-expo) 1.6s infinite;
+}
+
+@keyframes sense-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.75;
+  }
+  70% {
+    transform: scale(1.28);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.28);
+    opacity: 0;
+  }
+}
+
+/* Slow drift for the far city haze. */
+.city-drift {
+  animation: city-drift 42s ease-in-out infinite alternate;
+}
+
+@keyframes city-drift {
+  from {
+    transform: translate3d(-1.5%, 0, 0);
+  }
+  to {
+    transform: translate3d(1.5%, 0, 0);
+  }
+}
+
+/* Window lights flicker on at staggered intervals. */
+.window-flicker {
+  animation: window-flicker 7s steps(1, end) infinite;
+}
+
+@keyframes window-flicker {
+  0%,
+  46%,
+  54%,
+  100% {
+    opacity: 1;
+  }
+  48%,
+  52% {
+    opacity: 0.35;
+  }
+}
+
+/* Ambient dust motes rising through the night air. */
+.mote {
+  animation: mote-rise var(--mote-duration, 22s) linear var(--mote-delay, 0s)
+    infinite;
+}
+
+@keyframes mote-rise {
+  0% {
+    transform: translate3d(0, 8vh, 0);
+    opacity: 0;
+  }
+  12%,
+  80% {
+    opacity: var(--mote-opacity, 0.5);
+  }
+  100% {
+    transform: translate3d(var(--mote-drift, 12px), -92vh, 0);
+    opacity: 0;
+  }
+}
+
+/* Marquee for the ticker strip between sections. */
+.ticker-track {
+  animation: ticker 38s linear infinite;
+}
+
+@keyframes ticker {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Blinking terminal-style caret. */
+.caret {
+  animation: caret-blink 1.1s steps(2, end) infinite;
+}
+
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* -------------------------------------------------- reduced motion */
+
+/*
+  Every decorative animation is switched off wholesale, and anything that
+  animates *in* is pinned to its finished state rather than left invisible.
+  Framer-motion work is gated separately via `useReducedMotion()`.
+*/
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-}
 
-body {
-  background-color: var(--color-bp-800);
-  color: var(--color-ink);
-  font-family: var(--font-body);
-  -webkit-font-smoothing: antialiased;
-}
+  .city-drift,
+  .window-flicker,
+  .mote,
+  .ticker-track,
+  .caret,
+  .sense-ring::before,
+  .sense-ring::after {
+    animation: none !important;
+  }
 
-::selection {
-  background-color: var(--color-accent);
-  color: var(--color-bp-900);
-}
-
-/* visible keyboard focus everywhere */
-:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 3px;
-  border-radius: 1px;
-}
-
-/* hero eyebrow leader line: plots out from zero width on load */
-.hero-leader {
-  transform-origin: left center;
-  animation: leader-draw 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
-}
-
-@keyframes leader-draw {
-  from {
-    transform: scaleX(0);
+  .sense-ring::before,
+  .sense-ring::after {
     opacity: 0;
   }
-  to {
-    transform: scaleX(1);
-    opacity: 1;
+
+  .mote {
+    opacity: 0;
   }
 }
 
 /*
-  Background atmosphere: a single faint scanline drifts down the drawing
-  surface, and a slow "survey point" pulse breathes at the top. Both are
-  near-imperceptible and add depth without pulling focus. Disabled wholesale
-  under reduced motion below.
+  The footer motion toggle sets `data-motion="off"` on <html>, which has to
+  win over the media query above for users who opt out manually.
 */
-.bp-scanline {
-  animation: scanline-drift 14s linear infinite;
+:root[data-motion="off"] .city-drift,
+:root[data-motion="off"] .window-flicker,
+:root[data-motion="off"] .mote,
+:root[data-motion="off"] .ticker-track,
+:root[data-motion="off"] .caret,
+:root[data-motion="off"] .animate-bounce,
+:root[data-motion="off"] .sense-ring::before,
+:root[data-motion="off"] .sense-ring::after {
+  animation: none !important;
 }
 
-@keyframes scanline-drift {
-  from {
-    transform: translateY(-8vh);
-  }
-  to {
-    transform: translateY(108vh);
-  }
+:root[data-motion="off"] .mote {
+  opacity: 0;
 }
 
-.bp-survey {
-  animation: survey-pulse 6s ease-in-out infinite;
-}
-
-@keyframes survey-pulse {
-  0%,
-  100% {
-    opacity: 0.15;
-    transform: scale(0.9);
-  }
-  50% {
-    opacity: 0.4;
-    transform: scale(1);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-leader,
-  .bp-scanline,
-  .bp-survey {
-    animation: none;
-  }
-  .hero-leader {
-    transform: scaleX(1);
-    opacity: 1;
-  }
-}
-
-/* hairline utility used across panels */
-@utility hairline {
-  border-color: color-mix(in srgb, var(--color-line) 18%, transparent);
-}
-
-/*
-  Frosted drawing-film panel. Sits over the fixed schematic grid so the
-  grid stays faintly visible through the blur, like a sheet of vellum laid
-  on the drawing. Backdrop-blur is progressively enhanced: browsers without
-  it still get the translucent ground and hairline border.
-*/
-@utility glass-panel {
-  /* `background-color` + `background-image` rather than the `background`
-     shorthand: the shorthand resets background-image and would wipe out the
-     tick marks when combined with `corner-ticks`. */
-  background-color: color-mix(in srgb, var(--color-bp-700) 30%, transparent);
-  border: 1px solid color-mix(in srgb, var(--color-line) 14%, transparent);
-  box-shadow:
-    inset 0 1px 0 0 color-mix(in srgb, var(--color-line) 12%, transparent),
-    0 8px 32px -12px rgba(9, 16, 30, 0.55);
-
-  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
-    -webkit-backdrop-filter: blur(10px) saturate(130%);
-    backdrop-filter: blur(10px) saturate(130%);
-  }
-}
-
-/* blueprint corner tick marks on panels */
-@utility corner-ticks {
-  position: relative;
-  background-image:
-    linear-gradient(
-      to right,
-      color-mix(in srgb, var(--color-line) 55%, transparent) 0,
-      color-mix(in srgb, var(--color-line) 55%, transparent) 100%
-    ),
-    linear-gradient(
-      to right,
-      color-mix(in srgb, var(--color-line) 55%, transparent) 0,
-      color-mix(in srgb, var(--color-line) 55%, transparent) 100%
-    ),
-    linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--color-line) 55%, transparent) 0,
-      color-mix(in srgb, var(--color-line) 55%, transparent) 100%
-    ),
-    linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--color-line) 55%, transparent) 0,
-      color-mix(in srgb, var(--color-line) 55%, transparent) 100%
-    );
-  background-repeat: no-repeat;
-  background-size:
-    10px 1px,
-    10px 1px,
-    1px 10px,
-    1px 10px;
-  background-position:
-    top left,
-    bottom right,
-    top left,
-    bottom right;
+:root[data-motion="off"] {
+  scroll-behavior: auto;
 }
