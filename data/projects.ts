@@ -285,7 +285,11 @@ export type ProjectEntry = {
   note?: string;
 };
 
-const study = (id: string) => caseStudies.find((c) => c.id === id)!;
+const study = (id: string) => {
+  const found = caseStudies.find((c) => c.id === id);
+  if (!found) throw new Error(`Unknown case study id: ${id}`);
+  return found;
+};
 
 export const projectEntries: ProjectEntry[] = [
   {
