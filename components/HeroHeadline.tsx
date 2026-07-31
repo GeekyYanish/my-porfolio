@@ -1,66 +1,83 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
+import { EASE_OUT_EXPO, useMotionDisabled } from "@/components/motion";
 import { site } from "@/data/site";
 
-const accentClass = {
-  cyan: "text-accent",
-  teal: "text-teal-data",
-} as const;
-
-const underlineClass = {
-  cyan: "stroke-accent",
-  teal: "stroke-teal-data",
-} as const;
-
 /**
- * Hero <h1>, rendered from `site.headlineParts` so the accent words stay
- * in the data layer. Accent words sit above a blueprint "dimension"
- * underline — a measured line with end ticks — that plots itself in after
- * the text settles. `text-balance` handles responsive line wrapping, so
- * there are no brittle <br> tags. Fully static under reduced motion.
+ * The hero <h1>.
+ *
+ * The visible name is split per character so it can snap in letter by
+ * letter, which would make a screen reader spell it out — so the split
+ * markup is `aria-hidden` and the real sentence lives in an `sr-only` span.
+ * Under reduced motion the same markup renders with no animation at all.
  */
 export default function HeroHeadline() {
-  const reduceMotion = useReducedMotion();
-  let accentIndex = 0;
+  const reduceMotion = useMotionDisabled();
+  const chars = [...site.name];
+
+  /*
+    Transform-only, deliberately — no opacity fade anywhere in the hero
+    headline.
+
+    Framer serialises `initial` into the SSR markup, so fading in from
+    `opacity: 0` means the biggest text on the page cannot paint until
+    hydration finishes, and it becomes the LCP element at well over two
+    seconds. Animating position and scale alone lets the server-rendered
+    text paint immediately and still land the entrance.
+  */
+  const line = (delay: number) =>
+    reduceMotion
+      ? {}
+      : {
+          initial: { y: 18 },
+          animate: { y: 0 },
+          transition: { duration: 0.55, delay, ease: EASE_OUT_EXPO },
+        };
 
   return (
-    <h1 className="mt-5 font-heading text-4xl leading-tight font-bold text-balance text-ink sm:text-5xl md:text-[3.4rem]">
-      {site.headlineParts.map((part, i) => {
-        if (!("accent" in part) || !part.accent) {
-          return <span key={i}>{part.text}</span>;
-        }
-        const accent = part.accent;
-        const delay = 0.5 + accentIndex * 0.25;
-        accentIndex += 1;
+    <h1 className="mt-5">
+      <span className="sr-only">
+        {site.name} — {site.headline}
+      </span>
 
-        return (
-          <span key={i} className="relative inline-block whitespace-nowrap">
-            <span className={accentClass[accent]}>{part.text}</span>
-            {/* drawn measurement underline with end ticks */}
-            <svg
-              aria-hidden="true"
-              className="absolute -bottom-1.5 left-0 h-2 w-full overflow-visible"
-              viewBox="0 0 100 8"
-              preserveAspectRatio="none"
+      <span aria-hidden="true">
+        <span className="chromatic block font-display text-[clamp(2.3rem,10.5vw,7rem)] leading-[0.92] tracking-tight text-ink">
+          {chars.map((c, i) => (
+            <motion.span
+              key={i}
+              className="inline-block"
+              initial={
+                reduceMotion ? undefined : { y: -14, rotate: -7, scale: 0.9 }
+              }
+              animate={reduceMotion ? undefined : { y: 0, rotate: 0, scale: 1 }}
+              transition={{
+                type: "spring",
+                stiffness: 560,
+                damping: 26,
+                delay: 0.12 + i * 0.03,
+              }}
             >
-              <motion.path
-                d="M0.75 6.5 L0.75 2 M0.75 6.5 L99.25 6.5 M99.25 6.5 L99.25 2"
-                className={underlineClass[accent]}
-                fill="none"
-                strokeWidth="1.25"
-                vectorEffect="non-scaling-stroke"
-                initial={reduceMotion ? undefined : { pathLength: 0, opacity: 0 }}
-                animate={
-                  reduceMotion ? undefined : { pathLength: 1, opacity: 0.85 }
-                }
-                transition={{ duration: 0.7, delay, ease: "easeInOut" }}
-                style={reduceMotion ? { opacity: 0.85 } : undefined}
-              />
-            </svg>
-          </span>
-        );
-      })}
+              {c === " " ? " " : c}
+            </motion.span>
+          ))}
+        </span>
+
+        <motion.span
+          {...line(0.46)}
+          className="mt-4 block font-heading text-[clamp(1.35rem,4.6vw,2.9rem)] leading-[1.02] text-ink-muted uppercase"
+        >
+          Your Friendly Neighborhood
+        </motion.span>
+
+        <motion.span
+          {...line(0.56)}
+          className="block font-heading text-[clamp(1.7rem,6.2vw,4rem)] leading-[1] text-sense-400 uppercase"
+          style={{ textShadow: "0 0 32px color-mix(in srgb, var(--color-sense-500) 45%, transparent)" }}
+        >
+          {site.profession}
+        </motion.span>
+      </span>
     </h1>
   );
 }
