@@ -3,8 +3,12 @@ import Container from "@/components/Container";
 import WebMesh from "@/components/art/WebMesh";
 import Reveal from "@/components/Reveal";
 import SectionHeader from "@/components/SectionHeader";
+import TimelineStrand from "@/components/TimelineStrand";
 import { timeline, type TimelineNode } from "@/data/experience";
 
+/* `color` is the same accent as the Tailwind classes beside it, in a form
+   TimelineStrand can read off the DOM — it tints the spider and the strand
+   the spider spins after leaving each node. Keep the two in sync. */
 const KIND = {
   work: {
     Icon: Briefcase,
@@ -12,6 +16,7 @@ const KIND = {
     text: "text-web-400",
     ring: "border-web-500",
     fill: "bg-web-500",
+    color: "var(--color-web-500)",
   },
   study: {
     Icon: GraduationCap,
@@ -19,6 +24,7 @@ const KIND = {
     text: "text-sense-400",
     ring: "border-sense-500",
     fill: "bg-sense-500",
+    color: "var(--color-sense-500)",
   },
   honor: {
     Icon: Award,
@@ -26,6 +32,7 @@ const KIND = {
     text: "text-gold",
     ring: "border-gold",
     fill: "bg-gold",
+    color: "var(--color-gold)",
   },
 } as const;
 
@@ -38,6 +45,8 @@ function Node({ node, index }: { node: TimelineNode; index: number }) {
       {/* attachment point on the strand */}
       <span
         aria-hidden="true"
+        data-timeline-marker
+        data-node-color={k.color}
         className="absolute top-7 left-4 z-10 -translate-x-1/2 md:left-1/2"
       >
         <span className="relative flex h-5 w-5 items-center justify-center">
@@ -158,19 +167,13 @@ export default function Timeline() {
           intro="Work, degrees, and milestones hanging off one strand, most recent first."
         />
 
-        <div className="relative">
-          {/* the strand itself */}
-          <span
-            aria-hidden="true"
-            className="absolute top-0 bottom-0 left-4 w-px bg-linear-to-b from-transparent via-web-500/45 to-transparent md:left-1/2"
-          />
-
+        <TimelineStrand>
           <ol className="space-y-10 sm:space-y-12">
             {timeline.map((node, i) => (
               <Node key={node.id} node={node} index={i} />
             ))}
           </ol>
-        </div>
+        </TimelineStrand>
       </Container>
     </section>
   );

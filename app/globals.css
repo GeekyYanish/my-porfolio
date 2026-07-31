@@ -160,6 +160,30 @@ dialog::backdrop {
   cursor: none;
 }
 
+/*
+  The cursor layer is promoted into the top layer via the popover API so it
+  paints above modal <dialog>s, which live there too. That means undoing the
+  UA's popover defaults — they centre a fitted, bordered box — and keeping it
+  transparent to pointer events.
+*/
+.cursor-layer {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.cursor-layer:popover-open {
+  display: block;
+}
+
 /* ---------------------------------------------------------- utilities */
 
 /* Ben-Day halftone dots. `--dot` and `--dot-size` are tunable per element. */
@@ -337,6 +361,38 @@ dialog::backdrop {
   }
 }
 
+/*
+  Timeline spider gait.
+
+  Each leg pivots about the body centre (20 18 in the glyph's own viewBox),
+  which is why `transform-box` has to be `view-box` — the default `fill-box`
+  would rotate every leg about its own bounding box instead. Half the legs
+  run a half-cycle behind, so the spider keeps a stable tripod on the strand
+  rather than twitching all eight at once.
+*/
+.spider-leg {
+  transform-box: view-box;
+  transform-origin: 20px 18px;
+}
+
+[data-crawl="true"] .spider-leg {
+  animation: spider-step 0.4s ease-in-out infinite;
+}
+
+[data-crawl="true"] .spider-leg-b {
+  animation-delay: -0.2s;
+}
+
+@keyframes spider-step {
+  0%,
+  100% {
+    transform: rotate(-7deg);
+  }
+  50% {
+    transform: rotate(7deg);
+  }
+}
+
 /* Blinking terminal-style caret. */
 .caret {
   animation: caret-blink 1.1s steps(2, end) infinite;
@@ -365,6 +421,7 @@ dialog::backdrop {
   .mote,
   .ticker-track,
   .caret,
+  .spider-leg,
   .sense-ring::before,
   .sense-ring::after {
     animation: none !important;
@@ -389,6 +446,7 @@ dialog::backdrop {
 :root[data-motion="off"] .mote,
 :root[data-motion="off"] .ticker-track,
 :root[data-motion="off"] .caret,
+:root[data-motion="off"] .spider-leg,
 :root[data-motion="off"] .animate-bounce,
 :root[data-motion="off"] .sense-ring::before,
 :root[data-motion="off"] .sense-ring::after {
