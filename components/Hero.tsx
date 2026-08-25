@@ -5,7 +5,6 @@ import HeroHeadline from "@/components/HeroHeadline";
 import HeroSky from "@/components/HeroSky";
 import MagneticButton from "@/components/MagneticButton";
 import Reveal from "@/components/Reveal";
-import SwingIntro from "@/components/SwingIntro";
 import { site } from "@/data/site";
 
 export default function Hero() {
@@ -15,7 +14,6 @@ export default function Hero() {
       className="relative flex min-h-[100svh] items-center overflow-hidden pt-24 pb-20 sm:pt-28"
     >
       <HeroSky />
-      <SwingIntro />
 
       <Container className="relative z-10">
         <div className="max-w-4xl">
@@ -51,13 +49,15 @@ export default function Hero() {
           </Reveal>
 
           <Reveal delay={0.86}>
-            <ul className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
+            {/* The skyline rises behind this row at wide widths, so the
+                links carry their own ground rather than sitting on brickwork. */}
+            <ul className="mt-8 flex flex-wrap items-center gap-x-2 gap-y-1">
               <li>
                 <a
                   href={site.github}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="group flex items-center gap-2 font-mono text-xs tracking-[0.14em] text-ink-faint uppercase transition-colors hover:text-ink"
+                  className="group inline-flex min-h-11 items-center gap-2 rounded-xs bg-night-950/55 px-3 font-mono text-xs tracking-[0.14em] text-ink-faint uppercase backdrop-blur-xs transition-colors hover:text-ink"
                 >
                   <GithubIcon className="h-4 w-4 transition-colors group-hover:text-web-400" />
                   {site.githubHandle}
@@ -68,7 +68,7 @@ export default function Hero() {
                   href={site.linkedin}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="group flex items-center gap-2 font-mono text-xs tracking-[0.14em] text-ink-faint uppercase transition-colors hover:text-ink"
+                  className="group inline-flex min-h-11 items-center gap-2 rounded-xs bg-night-950/55 px-3 font-mono text-xs tracking-[0.14em] text-ink-faint uppercase backdrop-blur-xs transition-colors hover:text-ink"
                 >
                   <LinkedinIcon className="h-4 w-4 transition-colors group-hover:text-sense-400" />
                   {site.linkedinHandle}

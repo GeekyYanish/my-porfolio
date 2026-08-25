@@ -6,8 +6,8 @@ import WebMesh from "@/components/art/WebMesh";
 import { EASE_OUT_EXPO, useMotionDisabled } from "@/components/motion";
 
 /**
- * First-load web wipe: a web shoots across the screen, then the whole sheet
- * splits and pulls away.
+ * First-load web wipe: a web-covered screen tears at the middle and both
+ * halves are pulled off the viewport, exposing the site underneath.
  *
  * Gated on sessionStorage so it plays once per visit rather than on every
  * anchor navigation, and skipped entirely under reduced motion.
@@ -19,6 +19,7 @@ import { EASE_OUT_EXPO, useMotionDisabled } from "@/components/motion";
 export default function IntroCurtain() {
   const reduceMotion = useMotionDisabled();
   const [playing, setPlaying] = useState(false);
+  const [pulling, setPulling] = useState(false);
 
   useEffect(() => {
     /*
@@ -45,8 +46,12 @@ export default function IntroCurtain() {
       /* ignore */
     }
     setPlaying(true);
-    const t = setTimeout(() => setPlaying(false), 850);
-    return () => clearTimeout(t);
+    const pullTimer = window.setTimeout(() => setPulling(true), 420);
+    const finishTimer = window.setTimeout(() => setPlaying(false), 1260);
+    return () => {
+      window.clearTimeout(pullTimer);
+      window.clearTimeout(finishTimer);
+    };
   }, [reduceMotion]);
 
   return (
@@ -55,35 +60,62 @@ export default function IntroCurtain() {
         <motion.div
           key="curtain"
           aria-hidden="true"
-          className="pointer-events-none fixed inset-0 z-[90] bg-night-950"
+          className="pointer-events-none fixed inset-0 z-[90] overflow-hidden bg-night-950"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { duration: 0.38, ease: EASE_OUT_EXPO } }}
+          exit={{ opacity: 0, transition: { duration: 0.12 } }}
         >
+          <motion.div
+            className="absolute -top-[5%] -left-[6%] h-[110%] w-[58%] bg-[linear-gradient(135deg,var(--color-night-800),var(--color-night-950)_68%)] shadow-[12px_0_24px_color-mix(in_srgb,var(--color-ink-black)_45%,transparent)]"
+            style={{ clipPath: "polygon(0 0, 100% 0, 92% 47%, 100% 100%, 0 100%)" }}
+            initial={{ x: 0, y: 0, rotate: 0 }}
+            animate={
+              pulling
+                ? { x: "-118vw", y: "-5vh", rotate: -5 }
+                : { x: 0, y: 0, rotate: 0 }
+            }
+            transition={{ duration: 0.72, ease: EASE_OUT_EXPO }}
+          />
+          <motion.div
+            className="absolute -top-[5%] -right-[6%] h-[110%] w-[58%] bg-[linear-gradient(225deg,var(--color-night-800),var(--color-night-950)_68%)] shadow-[-12px_0_24px_color-mix(in_srgb,var(--color-ink-black)_45%,transparent)]"
+            style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%, 8% 53%)" }}
+            initial={{ x: 0, y: 0, rotate: 0 }}
+            animate={
+              pulling
+                ? { x: "118vw", y: "5vh", rotate: 5 }
+                : { x: 0, y: 0, rotate: 0 }
+            }
+            transition={{ duration: 0.72, ease: EASE_OUT_EXPO }}
+          />
           <motion.svg
             viewBox="0 0 1000 1000"
             preserveAspectRatio="xMidYMid slice"
-            className="h-full w-full text-web-500"
-            initial={{ scale: 1.25, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.55, ease: EASE_OUT_EXPO }}
+            className="absolute inset-0 h-full w-full text-web-500"
+            initial={{ scale: 1.18, opacity: 0 }}
+            animate={
+              pulling
+                ? { scale: 1.3, opacity: 0 }
+                : { scale: 1, opacity: 0.9 }
+            }
+            transition={{ duration: pulling ? 0.42 : 0.34, ease: EASE_OUT_EXPO }}
           >
-            <motion.g
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: 0.68, ease: EASE_OUT_EXPO }}
-            >
-              <WebMesh
-                cx={500}
-                cy={500}
-                radius={760}
-                spokes={16}
-                rings={7}
-                sag={0.14}
-                strokeWidth={1.6}
-                opacity={0.75}
-              />
-            </motion.g>
+            <WebMesh
+              cx={500}
+              cy={500}
+              radius={760}
+              spokes={16}
+              rings={7}
+              sag={0.14}
+              strokeWidth={1.6}
+              opacity={0.75}
+            />
           </motion.svg>
+          <motion.p
+            className="absolute inset-x-0 top-1/2 -translate-y-1/2 text-center font-mono text-[0.65rem] tracking-[0.42em] text-ink-muted uppercase sm:text-xs"
+            animate={pulling ? { opacity: 0, scale: 0.94 } : { opacity: 1, scale: 1 }}
+            transition={{ duration: 0.2 }}
+          >
+            Night shift // loading
+          </motion.p>
         </motion.div>
       )}
     </AnimatePresence>

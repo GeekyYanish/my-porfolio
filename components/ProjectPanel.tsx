@@ -122,7 +122,7 @@ export default function ProjectPanel({
             <button
               type="button"
               onClick={() => onOpen(entry)}
-              className="inline-flex items-center gap-2 bg-web-500 px-3.5 py-2 font-mono text-[0.66rem] tracking-[0.14em] text-ink uppercase transition-colors hover:bg-web-400"
+              className="inline-flex min-h-11 items-center gap-2 bg-web-500 px-4 py-2 font-mono text-[0.66rem] tracking-[0.14em] text-ink uppercase transition-colors hover:bg-web-400"
             >
               <BookOpen className="h-3.5 w-3.5" aria-hidden="true" />
               Case study
@@ -136,7 +136,7 @@ export default function ProjectPanel({
               href={l.href}
               target="_blank"
               rel="noreferrer noopener"
-              className="inline-flex items-center gap-1.5 border border-ink/20 px-3 py-2 font-mono text-[0.66rem] tracking-[0.14em] text-ink-muted uppercase transition-colors hover:border-sense-500 hover:text-sense-400"
+              className="inline-flex min-h-11 items-center gap-1.5 border border-ink/20 px-3.5 py-2 font-mono text-[0.66rem] tracking-[0.14em] text-ink-muted uppercase transition-colors hover:border-sense-500 hover:text-sense-400"
             >
               {l.label}
               <ArrowUpRight className="h-3 w-3" aria-hidden="true" />
