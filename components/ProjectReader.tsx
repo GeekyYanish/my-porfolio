@@ -109,7 +109,7 @@ export default function ProjectReader({
                       {step}
                     </span>
                     {i < study.diagramFlow.length - 1 && (
-                      <span aria-hidden="true" className="text-web-500">
+                      <span aria-hidden="true" className="text-web-400">
                         →
                       </span>
                     )}

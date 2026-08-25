@@ -118,7 +118,7 @@ export default function Nav() {
                         : "text-ink-faint hover:text-ink-muted"
                     }`}
                   >
-                    <span className="text-[0.6rem] text-web-500">{l.n}</span>
+                    <span className="text-[0.6rem] text-web-400">{l.n}</span>
                     {l.label}
                     {isActive && (
                       <motion.span
@@ -182,7 +182,7 @@ export default function Nav() {
                       onClick={() => setOpen(false)}
                       className="flex items-baseline gap-3 border-b border-ink/10 py-3.5 font-mono text-sm tracking-[0.16em] text-ink-muted uppercase"
                     >
-                      <span className="text-xs text-web-500">{l.n}</span>
+                      <span className="text-xs text-web-400">{l.n}</span>
                       {l.label}
                     </a>
                   </li>

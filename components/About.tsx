@@ -115,7 +115,7 @@ export default function About() {
                     className="halftone absolute inset-0 opacity-25"
                     style={{ "--dot-size": "8px" } as React.CSSProperties}
                   />
-                  <span className="relative font-display text-3xl leading-none text-web-500/60">
+                  <span className="relative font-display text-3xl leading-none text-web-400/75">
                     {beat.panel}
                   </span>
                   <p className="relative mt-3 font-mono text-[0.7rem] leading-relaxed tracking-wide text-sense-400 uppercase">

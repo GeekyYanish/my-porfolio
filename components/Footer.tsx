@@ -96,7 +96,7 @@ export default function Footer() {
             <p className="font-mono text-[0.66rem] tracking-[0.14em] text-ink-faint">
               © {year} {site.name} · {site.neighborhood}, IN
             </p>
-            <p className="mt-1.5 font-mono text-[0.62rem] tracking-[0.14em] text-ink-faint/70">
+            <p className="mt-1.5 font-mono text-[0.62rem] tracking-[0.14em] text-ink-faint">
               Built with Next.js, TypeScript &amp; Tailwind CSS · All artwork
               original
             </p>

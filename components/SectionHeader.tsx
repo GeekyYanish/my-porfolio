@@ -33,7 +33,7 @@ export default function SectionHeader({
           <span aria-hidden="true" className="text-ink-faint">
             Issue
           </span>
-          <span className="text-base leading-none text-web-500">#{issue}</span>
+          <span className="text-base leading-none text-web-400">#{issue}</span>
           <span
             aria-hidden="true"
             className="h-px w-8 bg-linear-to-r from-web-500 to-transparent"
