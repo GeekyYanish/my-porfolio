@@ -219,14 +219,14 @@ export default function SkillWeb() {
               textAnchor={n.anchor}
               dominantBaseline="middle"
               fontFamily="var(--font-mono)"
-              fontSize="15"
-              letterSpacing="1.4"
+              fontSize="13"
+              letterSpacing="0.5"
               fill={
                 n.i === active ? "var(--color-ink)" : "var(--color-ink-faint)"
               }
               style={{ transition: "fill 0.3s" }}
             >
-              {n.code}
+              {n.short}
             </text>
           ))}
         </svg>

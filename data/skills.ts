@@ -11,6 +11,14 @@ export type SkillGroup = {
   title: string;
   code: string;
   /**
+   * The word drawn on the web's outer ring. `code` is the stable key the
+   * `related` chords resolve against, so it stays a short slug — but a
+   * visitor reading the radar cold cannot decode "DA" or "CT", and the
+   * chart's whole claim is that it is legible at a glance. Keep this to
+   * one short word so it fits the spoke without colliding.
+   */
+  short: string;
+  /**
    * Proficiency, 1–5. Drives how far the node sits from the centre of the
    * skill web, so the outline doubles as a radar chart. Editorial, derived
    * from how much shipped work backs each group — adjust freely.
@@ -28,6 +36,7 @@ export const skillGroups: SkillGroup[] = [
   {
     title: "Data & Analytics",
     code: "DA",
+    short: "Data",
     level: 5,
     blurb:
       "Modeling data that holds up under inspection, then proving it with dashboards and evaluation scenarios.",
@@ -45,6 +54,7 @@ export const skillGroups: SkillGroup[] = [
   {
     title: "AI Systems",
     code: "AI",
+    short: "AI",
     level: 4,
     blurb:
       "Turning model output into scored, explainable signals rather than a black box verdict.",
@@ -60,6 +70,7 @@ export const skillGroups: SkillGroup[] = [
   {
     title: "Full Stack",
     code: "FS",
+    short: "Full Stack",
     level: 5,
     blurb:
       "End-to-end product work — real-time backends, typed APIs, and the interfaces on top of them.",
@@ -79,6 +90,7 @@ export const skillGroups: SkillGroup[] = [
   {
     title: "Web3",
     code: "W3",
+    short: "Web3",
     level: 4,
     blurb:
       "Wallet onboarding and publicly verifiable transaction flows, built for people who aren't crypto-native.",
@@ -94,6 +106,7 @@ export const skillGroups: SkillGroup[] = [
   {
     title: "Security",
     code: "SEC",
+    short: "Security",
     level: 3,
     blurb:
       "Finding the ways a web application breaks, then writing up the fix so someone can actually ship it.",
@@ -108,6 +121,7 @@ export const skillGroups: SkillGroup[] = [
   {
     title: "Cloud & Tools",
     code: "CT",
+    short: "Cloud",
     level: 3,
     blurb:
       "The deployment and delivery layer underneath everything else on this page.",
