@@ -18,8 +18,18 @@ export default function Hero() {
       <Container className="relative z-10">
         <div className="max-w-4xl">
           <Reveal variant="fade">
-            <p className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs tracking-[0.24em] text-ink-faint uppercase">
-              <span className="flex items-center gap-1.5 text-sense-400">
+            <p className="flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-xs tracking-[0.24em] text-ink-faint uppercase">
+              {/* The availability signal leads: it is the one thing a
+                  recruiter is scanning for and it was previously only
+                  stated at the very bottom of the page. */}
+              <span className="sense-ring relative flex items-center gap-2 border border-sense-500/45 bg-sense-500/10 px-2.5 py-1 text-sense-400">
+                <span
+                  aria-hidden="true"
+                  className="h-1.5 w-1.5 rounded-full bg-sense-400"
+                />
+                {site.availability}
+              </span>
+              <span className="flex items-center gap-1.5">
                 <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
                 {site.neighborhood}, IN
               </span>

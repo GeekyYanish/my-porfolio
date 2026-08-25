@@ -46,8 +46,14 @@ export default function IntroCurtain() {
       /* ignore */
     }
     setPlaying(true);
-    const pullTimer = window.setTimeout(() => setPulling(true), 420);
-    const finishTimer = window.setTimeout(() => setPlaying(false), 1260);
+    /*
+      Two seconds end to end, held once per session by the sessionStorage
+      gate above. The web sits and reads for a beat before it tears, so the
+      hold is deliberate rather than a stall — the tear itself still runs at
+      the same speed.
+    */
+    const pullTimer = window.setTimeout(() => setPulling(true), 1160);
+    const finishTimer = window.setTimeout(() => setPlaying(false), 2000);
     return () => {
       window.clearTimeout(pullTimer);
       window.clearTimeout(finishTimer);
