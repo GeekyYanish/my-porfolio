@@ -45,7 +45,7 @@ export default function Footer() {
 
           <a
             href="#top"
-            className="group flex items-center gap-2.5"
+            className="group flex min-h-11 items-center gap-2.5"
             aria-label={`${site.name} — back to top`}
           >
             <SpiderMark className="h-6 w-6 text-web-500 transition-transform duration-300 group-hover:rotate-90" />

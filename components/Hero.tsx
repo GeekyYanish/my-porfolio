@@ -40,7 +40,7 @@ export default function Hero() {
 
           <HeroHeadline />
 
-          <Reveal delay={0.66} className="mt-7 max-w-2xl">
+          <Reveal delay={0.66} className="mt-7 max-w-xl">
             <p className="text-base leading-relaxed text-ink-muted sm:text-lg">
               {site.subheadline}
             </p>
@@ -92,7 +92,7 @@ export default function Hero() {
       {/* scroll cue */}
       <a
         href="#about"
-        className="absolute inset-x-0 bottom-6 z-10 mx-auto flex w-fit flex-col items-center gap-2 font-mono text-micro tracking-[0.3em] text-ink-faint uppercase transition-colors hover:text-sense-400"
+        className="absolute inset-x-0 bottom-4 z-10 mx-auto flex w-fit flex-col items-center gap-2 px-3 py-1.5 font-mono text-micro tracking-[0.3em] text-ink-faint uppercase transition-colors hover:text-sense-400"
       >
         Scroll
         <ArrowDown

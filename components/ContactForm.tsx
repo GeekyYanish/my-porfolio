@@ -279,7 +279,7 @@ export default function ContactForm() {
           </a>
         )}
 
-        <p className="max-w-prose text-xs leading-relaxed text-ink-faint">
+        <p className="max-w-sm text-xs leading-relaxed text-ink-faint">
           Your message is sent directly through the form. If it can&apos;t be
           delivered, email me at{" "}
           <a

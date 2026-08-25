@@ -94,7 +94,7 @@ export default function Nav() {
       <Container className="flex h-16 items-center justify-between gap-4 sm:h-20">
         <a
           href="#top"
-          className="group flex items-center gap-2.5"
+          className="group flex min-h-11 items-center gap-2.5"
           aria-label={`${site.name} — back to top`}
         >
           <SpiderMark className="h-6 w-6 text-web-500 transition-transform duration-300 group-hover:rotate-90 sm:h-7 sm:w-7" />
@@ -150,7 +150,7 @@ export default function Nav() {
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-controls="mobile-nav"
-            className="flex h-10 w-10 items-center justify-center border border-ink/15 text-ink lg:hidden"
+            className="flex h-11 w-11 items-center justify-center border border-ink/15 text-ink lg:hidden"
           >
             <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
             {open ? (
