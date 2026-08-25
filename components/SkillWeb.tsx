@@ -267,7 +267,7 @@ export default function SkillWeb() {
               <span className="font-mono text-xs tracking-[0.22em] text-web-400 uppercase">
                 {current.code}
               </span>
-              <span className="font-mono text-[0.65rem] tracking-[0.18em] text-ink-faint uppercase">
+              <span className="font-mono text-micro tracking-[0.18em] text-ink-faint uppercase">
                 Level {current.level} / 5
               </span>
             </div>
@@ -296,7 +296,7 @@ export default function SkillWeb() {
               {current.items.map((item) => (
                 <li
                   key={item}
-                  className="border border-ink/15 px-2.5 py-1 font-mono text-[0.68rem] text-ink-muted"
+                  className="border border-ink/15 px-2.5 py-1 font-mono text-xs text-ink-muted"
                 >
                   {item}
                 </li>
@@ -304,7 +304,7 @@ export default function SkillWeb() {
             </ul>
 
             <div className="mt-6 border-t border-ink/10 pt-4">
-              <p className="font-mono text-[0.62rem] tracking-[0.2em] text-ink-faint uppercase">
+              <p className="font-mono text-micro tracking-[0.2em] text-ink-faint uppercase">
                 Proven in
               </p>
               <ul className="mt-2 space-y-1">
@@ -358,13 +358,13 @@ export default function SkillWeb() {
                 {g.items.map((item) => (
                   <li
                     key={item}
-                    className="border border-ink/15 px-2 py-0.5 font-mono text-[0.65rem] text-ink-muted"
+                    className="border border-ink/15 px-2 py-0.5 font-mono text-micro text-ink-muted"
                   >
                     {item}
                   </li>
                 ))}
               </ul>
-              <p className="mt-3 font-mono text-[0.62rem] tracking-[0.16em] text-ink-faint uppercase">
+              <p className="mt-3 font-mono text-micro tracking-[0.16em] text-ink-faint uppercase">
                 Proven in: {g.evidence.join(" · ")}
               </p>
             </details>

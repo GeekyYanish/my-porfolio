@@ -26,7 +26,7 @@ export default function SectionHeader({
     <header className={`mb-8 sm:mb-10 ${centered ? "text-center" : ""}`}>
       <Reveal variant="fade">
         <div
-          className={`flex items-center gap-3 font-mono text-[0.7rem] tracking-[0.28em] text-web-400 uppercase ${
+          className={`flex items-center gap-3 font-mono text-xs tracking-[0.28em] text-web-400 uppercase ${
             centered ? "justify-center" : ""
           }`}
         >

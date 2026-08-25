@@ -110,7 +110,7 @@ export default function IntroCurtain() {
             />
           </motion.svg>
           <motion.p
-            className="absolute inset-x-0 top-1/2 -translate-y-1/2 text-center font-mono text-[0.65rem] tracking-[0.42em] text-ink-muted uppercase sm:text-xs"
+            className="absolute inset-x-0 top-1/2 -translate-y-1/2 text-center font-mono text-micro tracking-[0.42em] text-ink-muted uppercase sm:text-xs"
             animate={pulling ? { opacity: 0, scale: 0.94 } : { opacity: 1, scale: 1 }}
             transition={{ duration: 0.2 }}
           >

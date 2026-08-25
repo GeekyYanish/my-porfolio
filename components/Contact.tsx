@@ -66,7 +66,7 @@ export default function Contact() {
                     >
                       <Icon className="h-5 w-5 shrink-0 text-ink-faint transition-colors group-hover:text-sense-400" />
                       <span className="min-w-0 flex-1">
-                        <span className="block font-mono text-[0.62rem] tracking-[0.2em] text-ink-faint uppercase">
+                        <span className="block font-mono text-micro tracking-[0.2em] text-ink-faint uppercase">
                           {label}
                         </span>
                         <span className="block truncate text-sm text-ink-muted transition-colors group-hover:text-ink">
@@ -88,27 +88,27 @@ export default function Contact() {
 
             <Reveal variant="right" delay={0.1}>
               <div className="comic-panel p-5">
-                <p className="flex items-center gap-2 font-mono text-[0.62rem] tracking-[0.2em] text-ink-faint uppercase">
+                <p className="flex items-center gap-2 font-mono text-micro tracking-[0.2em] text-ink-faint uppercase">
                   <MapPin className="h-3.5 w-3.5 text-web-400" aria-hidden="true" />
                   Based in
                 </p>
                 <p className="mt-1.5 text-sm text-ink-muted">{site.location}</p>
 
-                <p className="mt-5 font-mono text-[0.62rem] tracking-[0.2em] text-ink-faint uppercase">
+                <p className="mt-5 font-mono text-micro tracking-[0.2em] text-ink-faint uppercase">
                   Currently targeting
                 </p>
                 <ul className="mt-2 flex flex-wrap gap-1.5">
                   {site.targetRoles.map((role) => (
                     <li
                       key={role}
-                      className="border border-ink/15 px-2 py-0.5 font-mono text-[0.62rem] text-ink-muted"
+                      className="border border-ink/15 px-2 py-0.5 font-mono text-micro text-ink-muted"
                     >
                       {role}
                     </li>
                   ))}
                 </ul>
 
-                <p className="mt-5 flex items-center gap-2 border-t border-ink/10 pt-4 font-mono text-[0.68rem] text-sense-400">
+                <p className="mt-5 flex items-center gap-2 border-t border-ink/10 pt-4 font-mono text-xs text-sense-400">
                   <span
                     aria-hidden="true"
                     className="h-2 w-2 rounded-full bg-sense-400"

@@ -58,7 +58,7 @@ export default function Projects() {
                 type="button"
                 onClick={() => setFilter(f)}
                 aria-pressed={on}
-                className={`relative inline-flex min-h-11 items-center border-2 px-4 py-2 font-mono text-[0.68rem] tracking-[0.14em] uppercase transition-colors ${
+                className={`relative inline-flex min-h-11 items-center border-2 px-4 py-2 font-mono text-xs tracking-[0.14em] uppercase transition-colors ${
                   on
                     ? "border-web-500 bg-web-500 text-ink"
                     : "border-ink/18 text-ink-faint hover:border-ink/40 hover:text-ink-muted"

@@ -18,7 +18,7 @@ export default function Hero() {
       <Container className="relative z-10">
         <div className="max-w-4xl">
           <Reveal variant="fade">
-            <p className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[0.7rem] tracking-[0.24em] text-ink-faint uppercase sm:text-xs">
+            <p className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs tracking-[0.24em] text-ink-faint uppercase">
               <span className="flex items-center gap-1.5 text-sense-400">
                 <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
                 {site.neighborhood}, IN
@@ -82,7 +82,7 @@ export default function Hero() {
       {/* scroll cue */}
       <a
         href="#about"
-        className="absolute inset-x-0 bottom-6 z-10 mx-auto flex w-fit flex-col items-center gap-2 font-mono text-[0.62rem] tracking-[0.3em] text-ink-faint uppercase transition-colors hover:text-sense-400"
+        className="absolute inset-x-0 bottom-6 z-10 mx-auto flex w-fit flex-col items-center gap-2 font-mono text-micro tracking-[0.3em] text-ink-faint uppercase transition-colors hover:text-sense-400"
       >
         Scroll
         <ArrowDown

@@ -184,7 +184,7 @@ export default function ContactForm() {
           <div key={field}>
             <label
               htmlFor={`field-${field}`}
-              className="mb-1.5 block font-mono text-[0.66rem] tracking-[0.18em] text-ink-muted uppercase"
+              className="mb-1.5 block font-mono text-micro tracking-[0.18em] text-ink-muted uppercase"
             >
               {LABELS[field]}
             </label>
@@ -203,7 +203,7 @@ export default function ContactForm() {
             {errors[field] && (
               <p
                 id={`error-${field}`}
-                className="mt-1.5 font-mono text-[0.68rem] text-web-400"
+                className="mt-1.5 font-mono text-xs text-web-400"
               >
                 {errors[field]}
               </p>
@@ -214,7 +214,7 @@ export default function ContactForm() {
         <div>
           <label
             htmlFor="field-message"
-            className="mb-1.5 block font-mono text-[0.66rem] tracking-[0.18em] text-ink-muted uppercase"
+            className="mb-1.5 block font-mono text-micro tracking-[0.18em] text-ink-muted uppercase"
           >
             {LABELS.message}
           </label>
@@ -232,7 +232,7 @@ export default function ContactForm() {
           {errors.message && (
             <p
               id="error-message"
-              className="mt-1.5 font-mono text-[0.68rem] text-web-400"
+              className="mt-1.5 font-mono text-xs text-web-400"
             >
               {errors.message}
             </p>
@@ -255,14 +255,14 @@ export default function ContactForm() {
         */}
         <div className="min-h-[1.25rem]">
           {submission === "error" ? (
-            <p role="alert" className="font-mono text-[0.7rem] text-web-400">
+            <p role="alert" className="font-mono text-xs text-web-400">
               {feedback}
             </p>
           ) : (
             <p
               role="status"
               aria-live="polite"
-              className="font-mono text-[0.7rem] text-sense-400"
+              className="font-mono text-xs text-sense-400"
             >
               {feedback}
             </p>

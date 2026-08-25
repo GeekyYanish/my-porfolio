@@ -81,18 +81,18 @@ function Node({ node, index }: { node: TimelineNode; index: number }) {
         <article className="comic-panel relative p-5 sm:p-6">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
             <span
-              className={`inline-flex items-center gap-1.5 font-mono text-[0.62rem] tracking-[0.2em] uppercase ${k.text}`}
+              className={`inline-flex items-center gap-1.5 font-mono text-micro tracking-[0.2em] uppercase ${k.text}`}
             >
               <k.Icon className="h-3.5 w-3.5" aria-hidden="true" />
               {k.label}
             </span>
             {node.period && (
-              <span className="font-mono text-[0.65rem] text-ink-faint">
+              <span className="font-mono text-micro text-ink-faint">
                 {node.period}
               </span>
             )}
             {node.meta && (
-              <span className="border border-ink/15 px-2 py-0.5 font-mono text-[0.62rem] text-ink-muted">
+              <span className="border border-ink/15 px-2 py-0.5 font-mono text-micro text-ink-muted">
                 {node.meta}
               </span>
             )}
@@ -136,7 +136,7 @@ function Node({ node, index }: { node: TimelineNode; index: number }) {
               {node.steps.map((s) => (
                 <li
                   key={s}
-                  className="border border-ink/12 px-2 py-0.5 font-mono text-[0.6rem] tracking-wide text-ink-faint"
+                  className="border border-ink/12 px-2 py-0.5 font-mono text-micro tracking-wide text-ink-faint"
                 >
                   {s}
                 </li>

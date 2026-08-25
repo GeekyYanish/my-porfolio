@@ -118,7 +118,7 @@ export default function Nav() {
                         : "text-ink-faint hover:text-ink-muted"
                     }`}
                   >
-                    <span className="text-[0.6rem] text-web-400">{l.n}</span>
+                    <span className="text-micro text-web-400">{l.n}</span>
                     {l.label}
                     {isActive && (
                       <motion.span
@@ -139,7 +139,7 @@ export default function Nav() {
           <a
             href={site.resumePath}
             download
-            className="hidden items-center gap-2 border border-web-500/60 px-3.5 py-2 font-mono text-[0.7rem] tracking-[0.16em] text-ink uppercase transition-colors hover:bg-web-500/15 sm:flex"
+            className="hidden items-center gap-2 border border-web-500/60 px-3.5 py-2 font-mono text-xs tracking-[0.16em] text-ink uppercase transition-colors hover:bg-web-500/15 sm:flex"
           >
             <Download className="h-3.5 w-3.5" aria-hidden="true" />
             Résumé

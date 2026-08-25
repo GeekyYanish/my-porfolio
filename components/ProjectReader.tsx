@@ -87,7 +87,7 @@ export default function ProjectReader({
           />
 
           <div className="p-6 sm:p-9">
-            <p className="font-mono text-[0.68rem] tracking-[0.24em] text-web-400 uppercase">
+            <p className="font-mono text-xs tracking-[0.24em] text-web-400 uppercase">
               {entry.index} · {entry.categories.join(" · ")}
             </p>
             <h2
@@ -105,7 +105,7 @@ export default function ProjectReader({
               <ol className="mt-7 flex flex-wrap items-center gap-x-2 gap-y-2">
                 {study.diagramFlow.map((step, i) => (
                   <li key={step} className="flex items-center gap-2">
-                    <span className="border border-ink/15 bg-night-950/60 px-2.5 py-1 font-mono text-[0.65rem] tracking-wide text-ink-muted">
+                    <span className="border border-ink/15 bg-night-950/60 px-2.5 py-1 font-mono text-micro tracking-wide text-ink-muted">
                       {step}
                     </span>
                     {i < study.diagramFlow.length - 1 && (
@@ -130,7 +130,7 @@ export default function ProjectReader({
                   ] as const
                 ).map(([label, body]) => (
                   <section key={label}>
-                    <h3 className="font-mono text-[0.65rem] leading-normal tracking-[0.22em] text-sense-400 uppercase">
+                    <h3 className="font-mono text-micro leading-normal tracking-[0.22em] text-sense-400 uppercase">
                       {label}
                     </h3>
                     <p className="mt-2 text-sm leading-relaxed text-ink-muted">
@@ -140,7 +140,7 @@ export default function ProjectReader({
                 ))}
 
                 <section>
-                  <h3 className="font-mono text-[0.65rem] leading-normal tracking-[0.22em] text-sense-400 uppercase">
+                  <h3 className="font-mono text-micro leading-normal tracking-[0.22em] text-sense-400 uppercase">
                     Features
                   </h3>
                   <ul className="mt-2.5 space-y-2">
@@ -183,7 +183,7 @@ export default function ProjectReader({
               {entry.tech.map((t) => (
                 <li
                   key={t}
-                  className="border border-ink/15 px-2.5 py-1 font-mono text-[0.68rem] text-ink-muted"
+                  className="border border-ink/15 px-2.5 py-1 font-mono text-xs text-ink-muted"
                 >
                   {t}
                 </li>
@@ -198,7 +198,7 @@ export default function ProjectReader({
                     href={l.href}
                     target="_blank"
                     rel="noreferrer noopener"
-                    className="inline-flex items-center gap-2 border-2 border-ink/25 px-4 py-2.5 font-mono text-[0.7rem] tracking-[0.14em] text-ink uppercase transition-colors hover:border-web-500 hover:text-web-400"
+                    className="inline-flex items-center gap-2 border-2 border-ink/25 px-4 py-2.5 font-mono text-xs tracking-[0.14em] text-ink uppercase transition-colors hover:border-web-500 hover:text-web-400"
                   >
                     {l.label}
                     <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
