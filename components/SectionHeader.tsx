@@ -23,7 +23,7 @@ export default function SectionHeader({
   const centered = align === "center";
 
   return (
-    <header className={`mb-12 sm:mb-16 ${centered ? "text-center" : ""}`}>
+    <header className={`mb-8 sm:mb-10 ${centered ? "text-center" : ""}`}>
       <Reveal variant="fade">
         <div
           className={`flex items-center gap-3 font-mono text-[0.7rem] tracking-[0.28em] text-web-400 uppercase ${
@@ -43,7 +43,7 @@ export default function SectionHeader({
       </Reveal>
 
       <Reveal delay={0.06}>
-        <h2 className="mt-4 text-4xl leading-[0.9] text-ink sm:text-6xl lg:text-7xl">
+        <h2 className="mt-3 text-4xl leading-[0.9] text-ink sm:text-6xl lg:text-7xl">
           {title}
         </h2>
       </Reveal>
@@ -51,7 +51,7 @@ export default function SectionHeader({
       {intro && (
         <Reveal delay={0.12}>
           <p
-            className={`mt-5 max-w-2xl text-base leading-relaxed text-ink-muted sm:text-lg ${
+            className={`mt-4 max-w-xl text-base leading-relaxed text-ink-muted sm:text-lg ${
               centered ? "mx-auto" : ""
             }`}
           >
