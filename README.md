@@ -42,7 +42,8 @@ A few pieces worth knowing about:
 - **Projects** — filterable comic panels, each with bespoke generated artwork. Case studies open in
   a reader that turns like a comic page.
 - **Timeline** — work, degrees, and milestones hanging off one web strand.
-- **Contact** — validates in the browser, plays a web-shoot, then hands off to your mail client.
+- **Contact** — validates in the browser, sends the enquiry through the Resend API, and shows
+  success or error feedback without opening a mail client.
 
 ## Editing content
 
@@ -90,6 +91,16 @@ a placeholder. To use a real photo, drop an `<image>` into the clipped group in
 `components/ProfileCrest.tsx` — the hexagonal frame and webbing carry over unchanged.
 
 ## Deploying on Vercel
+
+### Contact form email setup
+
+The contact form sends submissions through [Resend](https://resend.com). Copy `.env.example` to
+`.env.local`, add a `RESEND_API_KEY`, and set `RESEND_FROM_EMAIL` to an address on a domain you
+have verified in Resend. The route will deliberately refuse to send until both are configured,
+so a deployment cannot appear to work while using an unverified sender. The recipient defaults to
+the email in `data/site.ts`; set `CONTACT_TO_EMAIL` if it should go somewhere else. Add the same
+variables in the deployment provider's environment settings, then redeploy and send a real test
+message from the deployed site.
 
 1. Push this folder to a GitHub repository.
 2. Go to [vercel.com/new](https://vercel.com/new), import the repository, and accept the detected

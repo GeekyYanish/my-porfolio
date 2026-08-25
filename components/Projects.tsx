@@ -76,6 +76,21 @@ export default function Projects() {
           {filter !== "All" ? ` in ${filter}` : ""}.
         </p>
 
+        {visible.length === 0 && (
+          <p className="comic-panel px-6 py-10 text-center text-sm text-ink-muted">
+            No case files under{" "}
+            <span className="text-ink">{filter}</span> yet.{" "}
+            <button
+              type="button"
+              onClick={() => setFilter("All")}
+              className="text-sense-400 underline underline-offset-4 hover:text-sense-500"
+            >
+              Show all six
+            </button>
+            .
+          </p>
+        )}
+
         <motion.ul
           layout={!reduceMotion}
           className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"

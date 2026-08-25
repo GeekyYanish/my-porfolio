@@ -90,7 +90,10 @@ export default function ProjectPanel({
 
       {/* body */}
       <div className="flex flex-1 flex-col p-5 sm:p-6">
-        <h3 className="font-heading text-2xl leading-tight text-ink">
+        {/* Two lines reserved: titles vary from "Procto" to "Analytics Agent
+            Evaluation Harness", and without this the taglines and blurbs sit
+            at different heights across the row. */}
+        <h3 className="font-heading text-2xl leading-tight text-ink sm:min-h-[2.5em]">
           {entry.title}
         </h3>
         <p className={`mt-1 font-mono text-xs tracking-wide ${accent.text}`}>
