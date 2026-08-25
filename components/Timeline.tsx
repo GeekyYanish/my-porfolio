@@ -41,13 +41,13 @@ function Node({ node, index }: { node: TimelineNode; index: number }) {
   const left = index % 2 === 0;
 
   return (
-    <li className="relative grid md:grid-cols-2 md:gap-x-14">
+    <li className="relative grid lg:grid-cols-2 lg:gap-x-14">
       {/* attachment point on the strand */}
       <span
         aria-hidden="true"
         data-timeline-marker
         data-node-color={k.color}
-        className="absolute top-7 left-4 z-10 -translate-x-1/2 md:left-1/2"
+        className="absolute top-7 left-4 z-10 -translate-x-1/2 lg:left-1/2"
       >
         <span className="relative flex h-5 w-5 items-center justify-center">
           <svg
@@ -74,8 +74,8 @@ function Node({ node, index }: { node: TimelineNode; index: number }) {
 
       <Reveal
         variant={left ? "left" : "right"}
-        className={`pl-12 md:pl-0 ${
-          left ? "md:col-start-1 md:pr-2" : "md:col-start-2 md:pl-2"
+        className={`pl-12 lg:pl-0 ${
+          left ? "lg:col-start-1 lg:pr-2" : "lg:col-start-2 lg:pl-2"
         }`}
       >
         <article className="comic-panel relative p-5 sm:p-6">

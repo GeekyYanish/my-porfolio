@@ -180,13 +180,13 @@ export default function TimelineStrand({ children }: { children: ReactNode }) {
       {/* the un-spun strand, faint for its whole length */}
       <span
         aria-hidden="true"
-        className="absolute top-0 bottom-0 left-4 w-px bg-linear-to-b from-transparent via-ink/12 to-transparent md:left-1/2"
+        className="absolute top-0 bottom-0 left-4 w-px bg-linear-to-b from-transparent via-ink/12 to-transparent lg:left-1/2"
       />
 
       {span && nodes.length > 1 && (
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute left-4 z-20 w-px md:left-1/2"
+          className="pointer-events-none absolute left-4 z-20 w-px lg:left-1/2"
           style={{ top: span.top, height: span.height }}
         >
           {/*
