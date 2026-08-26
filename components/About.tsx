@@ -115,10 +115,10 @@ export default function About() {
                     className="halftone absolute inset-0 opacity-25"
                     style={{ "--dot-size": "8px" } as React.CSSProperties}
                   />
-                  <span className="relative font-display text-3xl leading-none text-web-500/60">
+                  <span className="relative font-display text-3xl leading-none text-web-400/75">
                     {beat.panel}
                   </span>
-                  <p className="relative mt-3 font-mono text-[0.7rem] leading-relaxed tracking-wide text-sense-400 uppercase">
+                  <p className="relative mt-3 font-mono text-xs leading-relaxed tracking-wide text-sense-400 uppercase">
                     {beat.caption}
                   </p>
                   <p className="relative mt-2.5 text-sm leading-relaxed text-ink-muted">
@@ -171,7 +171,7 @@ export default function About() {
                         />
                         <span className="text-ink-muted">
                           {ex.label}
-                          <span className="mt-0.5 block font-mono text-[0.62rem] tracking-[0.12em] text-ink-faint uppercase">
+                          <span className="mt-0.5 block font-mono text-micro tracking-[0.12em] text-ink-faint uppercase">
                             {ex.source}
                           </span>
                         </span>

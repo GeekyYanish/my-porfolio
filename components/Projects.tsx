@@ -58,7 +58,7 @@ export default function Projects() {
                 type="button"
                 onClick={() => setFilter(f)}
                 aria-pressed={on}
-                className={`relative border-2 px-3.5 py-2 font-mono text-[0.68rem] tracking-[0.14em] uppercase transition-colors ${
+                className={`relative inline-flex min-h-11 items-center border-2 px-4 py-2 font-mono text-xs tracking-[0.14em] uppercase transition-colors ${
                   on
                     ? "border-web-500 bg-web-500 text-ink"
                     : "border-ink/18 text-ink-faint hover:border-ink/40 hover:text-ink-muted"
@@ -75,6 +75,21 @@ export default function Projects() {
           Showing {visible.length} of {projectEntries.length} projects
           {filter !== "All" ? ` in ${filter}` : ""}.
         </p>
+
+        {visible.length === 0 && (
+          <p className="comic-panel px-6 py-10 text-center text-sm text-ink-muted">
+            No case files under{" "}
+            <span className="text-ink">{filter}</span> yet.{" "}
+            <button
+              type="button"
+              onClick={() => setFilter("All")}
+              className="text-sense-400 underline underline-offset-4 hover:text-sense-500"
+            >
+              Show all six
+            </button>
+            .
+          </p>
+        )}
 
         <motion.ul
           layout={!reduceMotion}

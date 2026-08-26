@@ -34,13 +34,13 @@ export default function ResumeCartridge({
           className="halftone-red absolute inset-0 opacity-40"
         />
         <span className="relative flex flex-col">
-          <span className="font-mono text-[0.6rem] tracking-[0.22em] text-web-400 uppercase">
+          <span className="font-mono text-micro tracking-[0.22em] text-web-400 uppercase">
             Web-Fluid Cartridge
           </span>
           <span className="font-heading text-lg tracking-wide text-ink uppercase">
             Download Résumé
           </span>
-          <span className="font-mono text-[0.6rem] tracking-[0.14em] text-ink-faint uppercase">
+          <span className="font-mono text-micro tracking-[0.14em] text-ink-faint uppercase">
             PDF · Pressure 100%
           </span>
         </span>

@@ -6,6 +6,7 @@
 export const site = {
   name: "Yanish Rai",
   shortName: "YR",
+  url: "https://yanish.me",
   location: "Bengaluru, Karnataka, India",
   /** Short form used in the hero eyebrow and footer title block. */
   neighborhood: "Bengaluru",
@@ -14,6 +15,13 @@ export const site = {
   headline: "Your Friendly Neighborhood Full-Stack Developer.",
   subheadline:
     "MCA student from CHRIST University building data-rich applications, AI evaluation workflows, real-time proctoring systems, and transparent Web3 products.",
+  /**
+   * The one-line answer to "what is he looking for", shown in the hero
+   * eyebrow. Recruiters skimming for twenty seconds were previously told
+   * what Yanish does but never what he wants; `targetRoles` — the only
+   * place that said so — sits at the very bottom of the page.
+   */
+  availability: "Open to Full-Stack roles",
   supportLine:
     "Data analytics, AI systems, and full-stack products built with measurable engineering outcomes.",
   email: "yanish.rai@mca.christuniversity.in",
@@ -27,9 +35,9 @@ export const site = {
   contactCta:
     "Open to internships, entry-level roles, technical consulting opportunities, and product engineering collaborations.",
   targetRoles: [
+    "Full-Stack Developer",
     "Data Analyst",
     "Data Engineer Intern",
-    "Full-Stack Developer",
     "Technical Consultant",
     "AI Application Developer",
     "Web3 / FinTech Builder",

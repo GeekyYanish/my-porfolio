@@ -42,7 +42,8 @@ A few pieces worth knowing about:
 - **Projects** — filterable comic panels, each with bespoke generated artwork. Case studies open in
   a reader that turns like a comic page.
 - **Timeline** — work, degrees, and milestones hanging off one web strand.
-- **Contact** — validates in the browser, plays a web-shoot, then hands off to your mail client.
+- **Contact** — validates in the browser, sends the enquiry through the Resend API, and shows
+  success or error feedback without opening a mail client.
 
 ## Editing content
 
@@ -78,6 +79,13 @@ of the skill web.
 Lighthouse on the production build: **Performance 94 · Accessibility 100 · Best Practices 96 ·
 SEO 100.**
 
+## SEO
+
+The canonical production origin is `https://yanish.me`. Next.js generates the sitemap, robots
+rules, web manifest, favicon, Apple touch icon, Open Graph card, and Person/WebSite structured data.
+To verify ownership in Google Search Console, set `GOOGLE_SITE_VERIFICATION` to the token from the
+HTML-tag verification method and redeploy.
+
 ## Replacing the resume
 
 The "Download Résumé" buttons serve `public/resume.pdf`. To update it, replace that file (keep the
@@ -91,17 +99,25 @@ a placeholder. To use a real photo, drop an `<image>` into the clipped group in
 
 ## Deploying on Vercel
 
+### Contact form email setup
+
+The contact form sends submissions through [Resend](https://resend.com). Copy `.env.example` to
+`.env.local`, add a `RESEND_API_KEY`, and set `RESEND_FROM_EMAIL` to an address on a domain you
+have verified in Resend. The route will deliberately refuse to send until both are configured,
+so a deployment cannot appear to work while using an unverified sender. The recipient defaults to
+the email in `data/site.ts`; set `CONTACT_TO_EMAIL` if it should go somewhere else. Add the same
+variables in the deployment provider's environment settings, then redeploy and send a real test
+message from the deployed site.
+
 1. Push this folder to a GitHub repository.
 2. Go to [vercel.com/new](https://vercel.com/new), import the repository, and accept the detected
    Next.js defaults.
 3. Click **Deploy**. Every push to the main branch redeploys automatically.
 
-Set `metadataBase` in `app/layout.tsx` to your real domain so Open Graph URLs resolve correctly.
-
 ### Adding a custom domain
 
 1. In the Vercel dashboard, open the project → **Settings → Domains**.
-2. Add your domain (e.g. `yanishrai.dev`).
+2. Add your domain (currently `yanish.me`).
 3. At your registrar, either point the nameservers at Vercel, or add the DNS records Vercel shows
    you (an `A` record to `76.76.21.21` for the apex, and a `CNAME` to `cname.vercel-dns.com` for
    `www`).

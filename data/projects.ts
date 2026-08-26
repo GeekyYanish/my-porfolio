@@ -330,7 +330,7 @@ export const projectEntries: ProjectEntry[] = [
     panel: "harness",
     links: study("harness").links,
     study: study("harness"),
-    note: "Internal — anonymized case study",
+    note: "Internal — anonymized",
   },
   {
     id: "mllab",

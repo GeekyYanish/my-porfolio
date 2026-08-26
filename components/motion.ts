@@ -77,7 +77,19 @@ export function useMotionDisabled() {
     () => false,
   );
   const [hydrated, setHydrated] = useState(false);
-  useIsomorphicLayoutEffect(() => setHydrated(true), []);
+  useIsomorphicLayoutEffect(() => {
+    /*
+      Restore a saved manual preference before normal effects run. This keeps
+      full-screen entrance effects from starting for someone who already chose
+      "Motion: Off" on an earlier visit.
+    */
+    try {
+      if (localStorage.getItem("ns-motion") === "off") setMotionOff(true);
+    } catch {
+      /* private mode — default to the system preference */
+    }
+    setHydrated(true);
+  }, []);
 
   return hydrated && (Boolean(prefersReduced) || manual);
 }
@@ -271,4 +283,3 @@ export function useTilt(max = 7) {
 
   return { rotateX, rotateY, px, py, active, onPointerMove, onPointerLeave };
 }
-

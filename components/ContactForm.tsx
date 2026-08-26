@@ -2,12 +2,31 @@
 
 import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Send } from "lucide-react";
+import { Mail, Send } from "lucide-react";
 import { EASE_OUT_EXPO, useMotionDisabled } from "@/components/motion";
 import { site } from "@/data/site";
 
 type Field = "name" | "email" | "message";
 type Errors = Partial<Record<Field, string>>;
+type SubmissionState = "idle" | "sending" | "success" | "error";
+
+/**
+ * Builds the "email me directly" escape hatch, prefilled with everything the
+ * visitor already typed so a failed send never costs them the message.
+ */
+function mailtoFallback(values: Record<Field, string>) {
+  const subject = `Portfolio enquiry from ${values.name.trim() || "your site"}`;
+  const body = `${values.message.trim()}\n\n— ${values.name.trim()}\n${values.email.trim()}`;
+  return `mailto:${site.email}?subject=${encodeURIComponent(
+    subject,
+  )}&body=${encodeURIComponent(body)}`;
+}
+
+const EMPTY_VALUES: Record<Field, string> = {
+  name: "",
+  email: "",
+  message: "",
+};
 
 const LABELS: Record<Field, string> = {
   name: "Your name",
@@ -36,34 +55,41 @@ function validate(values: Record<Field, string>): Errors {
 /**
  * Contact form.
  *
- * The site is fully static, so there's no server to post to: this validates
- * in the browser, plays the web-shoot, then hands off to the visitor's mail
- * client with the message pre-filled. Everything they typed survives the
- * handoff, and there's a plain mailto fallback underneath if it doesn't.
+ * The browser validates the fields, then posts them to the server-side
+ * contact endpoint, which sends the message through Resend — so in the happy
+ * path the visitor never needs a mail app.
+ *
+ * When that path fails the form degrades instead of dead-ending: the visitor
+ * is offered a `mailto:` prefilled with everything they already typed, so a
+ * missing API key or a provider outage costs them a click rather than the
+ * whole message. Server wording is only ever shown for 4xx, which is the one
+ * case the visitor can actually act on.
  *
  * Errors are announced through `aria-invalid` + `aria-describedby` and are
  * always text — never colour alone.
  */
 export default function ContactForm() {
-  const [values, setValues] = useState<Record<Field, string>>({
-    name: "",
-    email: "",
-    message: "",
-  });
+  const [values, setValues] = useState<Record<Field, string>>(EMPTY_VALUES);
   const [errors, setErrors] = useState<Errors>({});
   const [submitted, setSubmitted] = useState(false);
-  const [sent, setSent] = useState(false);
+  const [submission, setSubmission] = useState<SubmissionState>("idle");
+  const [feedback, setFeedback] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const reduceMotion = useMotionDisabled();
   const formRef = useRef<HTMLFormElement>(null);
 
   const setField = (field: Field, value: string) => {
     setValues((v) => ({ ...v, [field]: value }));
+    if (submission !== "idle") {
+      setSubmission("idle");
+      setFeedback("");
+    }
     // Re-validate live only after the first submit attempt, so the form
     // doesn't nag while someone is still typing their first character.
     if (submitted) setErrors(validate({ ...values, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitted(true);
 
@@ -82,19 +108,48 @@ export default function ContactForm() {
       return;
     }
 
-    setSent(true);
+    setSubmission("sending");
+    setFeedback("");
 
-    const subject = encodeURIComponent(
-      `Portfolio enquiry from ${values.name.trim()}`,
-    );
-    const body = encodeURIComponent(
-      `${values.message.trim()}\n\n—\n${values.name.trim()}\n${values.email.trim()}`,
-    );
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...values, website: honeypot }),
+      });
+      const result = (await response.json().catch(() => ({}))) as {
+        error?: string;
+      };
 
-    // let the web-shoot land before the mail client steals focus
-    window.setTimeout(() => {
-      window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`;
-    }, 900);
+      if (!response.ok) {
+        /*
+          A 4xx means the visitor can fix it, and the endpoint's own wording
+          is already addressed to them. Anything 5xx is the delivery path
+          failing — an unconfigured key, a provider outage — which is never
+          the visitor's problem to read about, let alone act on. Say so
+          plainly and hand them the prefilled mailto instead.
+        */
+        const theirs = response.status < 500 && result.error;
+        setSubmission("error");
+        setFeedback(
+          theirs ||
+            "I couldn’t send that from here. Your message is safe — use the direct email link below and it’ll arrive with everything you typed.",
+        );
+        return;
+      }
+
+      setSubmission("success");
+      setFeedback("Message sent — it’s on its way to my inbox.");
+      setValues(EMPTY_VALUES);
+      setErrors({});
+      setHoneypot("");
+    } catch {
+      /* Offline, DNS, blocked request — same escape hatch. */
+      setSubmission("error");
+      setFeedback(
+        "I couldn’t reach the server. Your message is safe — use the direct email link below and it’ll arrive with everything you typed.",
+      );
+    }
   };
 
   const fieldClasses = (field: Field) =>
@@ -106,12 +161,30 @@ export default function ContactForm() {
 
   return (
     <div className="relative">
-      <form ref={formRef} noValidate onSubmit={handleSubmit} className="space-y-5">
+      <form
+        ref={formRef}
+        noValidate
+        onSubmit={handleSubmit}
+        aria-busy={submission === "sending"}
+        className="space-y-5"
+      >
+        <div className="sr-only" aria-hidden="true">
+          <label htmlFor="website">Leave this field empty</label>
+          <input
+            id="website"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            value={honeypot}
+            onChange={(e) => setHoneypot(e.target.value)}
+          />
+        </div>
+
         {(["name", "email"] as Field[]).map((field) => (
           <div key={field}>
             <label
               htmlFor={`field-${field}`}
-              className="mb-1.5 block font-mono text-[0.66rem] tracking-[0.18em] text-ink-muted uppercase"
+              className="mb-1.5 block font-mono text-micro tracking-[0.18em] text-ink-muted uppercase"
             >
               {LABELS[field]}
             </label>
@@ -124,12 +197,13 @@ export default function ContactForm() {
               onChange={(e) => setField(field, e.target.value)}
               aria-invalid={Boolean(errors[field])}
               aria-describedby={errors[field] ? `error-${field}` : undefined}
+              disabled={submission === "sending"}
               className={fieldClasses(field)}
             />
             {errors[field] && (
               <p
                 id={`error-${field}`}
-                className="mt-1.5 font-mono text-[0.68rem] text-web-400"
+                className="mt-1.5 font-mono text-xs text-web-400"
               >
                 {errors[field]}
               </p>
@@ -140,7 +214,7 @@ export default function ContactForm() {
         <div>
           <label
             htmlFor="field-message"
-            className="mb-1.5 block font-mono text-[0.66rem] tracking-[0.18em] text-ink-muted uppercase"
+            className="mb-1.5 block font-mono text-micro tracking-[0.18em] text-ink-muted uppercase"
           >
             {LABELS.message}
           </label>
@@ -152,12 +226,13 @@ export default function ContactForm() {
             onChange={(e) => setField("message", e.target.value)}
             aria-invalid={Boolean(errors.message)}
             aria-describedby={errors.message ? "error-message" : undefined}
+            disabled={submission === "sending"}
             className={`${fieldClasses("message")} resize-y`}
           />
           {errors.message && (
             <p
               id="error-message"
-              className="mt-1.5 font-mono text-[0.68rem] text-web-400"
+              className="mt-1.5 font-mono text-xs text-web-400"
             >
               {errors.message}
             </p>
@@ -166,33 +241,60 @@ export default function ContactForm() {
 
         <button
           type="submit"
-          className="sense-ring relative inline-flex w-full items-center justify-center gap-2.5 border-2 border-web-500 bg-web-500 px-6 py-3.5 font-mono text-xs tracking-[0.16em] text-ink uppercase transition-colors hover:border-web-400 hover:bg-web-400 sm:w-auto"
+          disabled={submission === "sending"}
+          className="sense-ring relative inline-flex w-full items-center justify-center gap-2.5 border-2 border-web-500 bg-web-500 px-6 py-3.5 font-mono text-xs tracking-[0.16em] text-ink uppercase transition-colors hover:border-web-400 hover:bg-web-400 disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
         >
           <Send className="h-4 w-4" aria-hidden="true" />
-          Shoot a message
+          {submission === "sending" ? "Sending…" : "Shoot a message"}
         </button>
 
-        <p role="status" className="min-h-[1.25rem] font-mono text-[0.7rem] text-sense-400">
-          {sent
-            ? "Message ready — opening your mail app now."
-            : ""}
-        </p>
+        {/*
+          Success is polite; a failed send is an `alert`, because it needs to
+          interrupt — there is an action waiting behind it. Both mount into a
+          reserved min-height so neither one shifts the form.
+        */}
+        <div className="min-h-[1.25rem]">
+          {submission === "error" ? (
+            <p role="alert" className="font-mono text-xs text-web-400">
+              {feedback}
+            </p>
+          ) : (
+            <p
+              role="status"
+              aria-live="polite"
+              className="font-mono text-xs text-sense-400"
+            >
+              {feedback}
+            </p>
+          )}
+        </div>
 
-        <p className="text-xs leading-relaxed text-ink-faint">
-          This opens your own mail app with the message filled in. Prefer to do
-          it yourself?{" "}
+        {submission === "error" && (
+          <a
+            href={mailtoFallback(values)}
+            className="inline-flex w-full items-center justify-center gap-2.5 border-2 border-sense-500 px-6 py-3.5 font-mono text-xs tracking-[0.16em] text-sense-400 uppercase transition-colors hover:bg-sense-500/15 sm:w-auto"
+          >
+            <Mail className="h-4 w-4" aria-hidden="true" />
+            Email it to me directly
+          </a>
+        )}
+
+        <p className="max-w-sm text-xs leading-relaxed text-ink-faint">
+          Your message is sent directly through the form. If it can&apos;t be
+          delivered, email me at{" "}
           <a
             href={`mailto:${site.email}`}
             className="text-sense-400 underline underline-offset-4 hover:text-sense-500"
           >
             {site.email}
           </a>
+          .
         </p>
       </form>
 
       {/* web-shoot: a strand fires across the panel and lands a THWIP */}
       <AnimatePresence>
-        {sent && !reduceMotion && (
+        {submission === "success" && !reduceMotion && (
           <motion.div
             key="shoot"
             aria-hidden="true"

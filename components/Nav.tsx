@@ -94,7 +94,7 @@ export default function Nav() {
       <Container className="flex h-16 items-center justify-between gap-4 sm:h-20">
         <a
           href="#top"
-          className="group flex items-center gap-2.5"
+          className="group flex min-h-11 items-center gap-2.5"
           aria-label={`${site.name} — back to top`}
         >
           <SpiderMark className="h-6 w-6 text-web-500 transition-transform duration-300 group-hover:rotate-90 sm:h-7 sm:w-7" />
@@ -118,7 +118,7 @@ export default function Nav() {
                         : "text-ink-faint hover:text-ink-muted"
                     }`}
                   >
-                    <span className="text-[0.6rem] text-web-500">{l.n}</span>
+                    <span className="text-micro text-web-400">{l.n}</span>
                     {l.label}
                     {isActive && (
                       <motion.span
@@ -139,7 +139,7 @@ export default function Nav() {
           <a
             href={site.resumePath}
             download
-            className="hidden items-center gap-2 border border-web-500/60 px-3.5 py-2 font-mono text-[0.7rem] tracking-[0.16em] text-ink uppercase transition-colors hover:bg-web-500/15 sm:flex"
+            className="hidden items-center gap-2 border border-web-500/60 px-3.5 py-2 font-mono text-xs tracking-[0.16em] text-ink uppercase transition-colors hover:bg-web-500/15 sm:flex"
           >
             <Download className="h-3.5 w-3.5" aria-hidden="true" />
             Résumé
@@ -150,7 +150,7 @@ export default function Nav() {
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-controls="mobile-nav"
-            className="flex h-10 w-10 items-center justify-center border border-ink/15 text-ink lg:hidden"
+            className="flex h-11 w-11 items-center justify-center border border-ink/15 text-ink lg:hidden"
           >
             <span className="sr-only">{open ? "Close menu" : "Open menu"}</span>
             {open ? (
@@ -182,7 +182,7 @@ export default function Nav() {
                       onClick={() => setOpen(false)}
                       className="flex items-baseline gap-3 border-b border-ink/10 py-3.5 font-mono text-sm tracking-[0.16em] text-ink-muted uppercase"
                     >
-                      <span className="text-xs text-web-500">{l.n}</span>
+                      <span className="text-xs text-web-400">{l.n}</span>
                       {l.label}
                     </a>
                   </li>

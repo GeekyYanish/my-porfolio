@@ -49,7 +49,7 @@ export default function MotionToggle() {
       type="button"
       onClick={toggle}
       aria-pressed={off}
-      className="inline-flex items-center gap-2 border border-ink/15 px-3 py-1.5 font-mono text-[0.62rem] tracking-[0.16em] text-ink-faint uppercase transition-colors hover:border-ink/35 hover:text-ink-muted"
+      className="inline-flex min-h-11 items-center gap-2 border border-ink/15 px-4 py-2 font-mono text-micro tracking-[0.16em] text-ink-faint uppercase transition-colors hover:border-ink/35 hover:text-ink-muted"
     >
       <Icon className="h-3.5 w-3.5" aria-hidden="true" />
       Motion: {off ? "Off" : "On"}

@@ -3,7 +3,6 @@ import CitySkyline from "@/components/art/CitySkyline";
 import SpiderMark from "@/components/art/SpiderMark";
 import BackToTop from "@/components/BackToTop";
 import Container from "@/components/Container";
-import IdleSlinger from "@/components/IdleSlinger";
 import MotionToggle from "@/components/MotionToggle";
 import { GithubIcon, LinkedinIcon } from "@/components/BrandIcons";
 import { site } from "@/data/site";
@@ -40,16 +39,13 @@ export default function Footer() {
         <div className="absolute inset-0 bg-[radial-gradient(60%_55%_at_50%_45%,color-mix(in_srgb,var(--color-night-950)_75%,transparent)_0%,transparent_78%)]" />
       </div>
 
-      {/* the slinger, hanging off the top edge */}
-      <IdleSlinger className="absolute top-0 right-[8%] z-10 hidden sm:block" />
-
       <Container className="relative z-10">
         <div className="flex flex-col items-center gap-8">
           <BackToTop />
 
           <a
             href="#top"
-            className="group flex items-center gap-2.5"
+            className="group flex min-h-11 items-center gap-2.5"
             aria-label={`${site.name} — back to top`}
           >
             <SpiderMark className="h-6 w-6 text-web-500 transition-transform duration-300 group-hover:rotate-90" />
@@ -62,7 +58,7 @@ export default function Footer() {
                 href={site.github}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="flex items-center gap-2 text-ink-faint transition-colors hover:text-web-400"
+                className="inline-flex h-11 w-11 items-center justify-center text-ink-faint transition-colors hover:text-web-400"
               >
                 <GithubIcon className="h-5 w-5" />
                 <span className="sr-only">
@@ -75,7 +71,7 @@ export default function Footer() {
                 href={site.linkedin}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="flex items-center gap-2 text-ink-faint transition-colors hover:text-sense-400"
+                className="inline-flex h-11 w-11 items-center justify-center text-ink-faint transition-colors hover:text-sense-400"
               >
                 <LinkedinIcon className="h-5 w-5" />
                 <span className="sr-only">
@@ -86,7 +82,7 @@ export default function Footer() {
             <li>
               <a
                 href={`mailto:${site.email}`}
-                className="flex items-center gap-2 text-ink-faint transition-colors hover:text-gold"
+                className="inline-flex h-11 w-11 items-center justify-center text-ink-faint transition-colors hover:text-gold"
               >
                 <Mail className="h-5 w-5" aria-hidden="true" />
                 <span className="sr-only">Email — {site.email}</span>
@@ -97,10 +93,10 @@ export default function Footer() {
           <MotionToggle />
 
           <div className="w-full border-t border-ink/10 pt-6 text-center">
-            <p className="font-mono text-[0.66rem] tracking-[0.14em] text-ink-faint">
+            <p className="font-mono text-micro tracking-[0.14em] text-ink-faint">
               © {year} {site.name} · {site.neighborhood}, IN
             </p>
-            <p className="mt-1.5 font-mono text-[0.62rem] tracking-[0.14em] text-ink-faint/70">
+            <p className="mt-1.5 font-mono text-micro tracking-[0.14em] text-ink-faint">
               Built with Next.js, TypeScript &amp; Tailwind CSS · All artwork
               original
             </p>

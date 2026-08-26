@@ -77,12 +77,12 @@ export default function ProjectPanel({
           />
         </motion.svg>
 
-        <span className="absolute top-3 left-3 border border-ink/25 bg-night-950/85 px-2 py-0.5 font-mono text-[0.6rem] tracking-[0.16em] text-ink-muted uppercase">
+        <span className="absolute top-3 left-3 border border-ink/25 bg-night-950/85 px-2 py-0.5 font-mono text-micro tracking-[0.16em] text-ink-muted uppercase">
           {entry.index}
         </span>
 
         {entry.note && (
-          <span className="absolute top-3 right-3 border border-gold/50 bg-night-950/85 px-2 py-0.5 font-mono text-[0.6rem] tracking-[0.14em] text-gold uppercase">
+          <span className="absolute top-3 right-3 border border-gold/50 bg-night-950/85 px-2 py-0.5 font-mono text-micro tracking-[0.14em] text-gold uppercase">
             {entry.note}
           </span>
         )}
@@ -90,10 +90,13 @@ export default function ProjectPanel({
 
       {/* body */}
       <div className="flex flex-1 flex-col p-5 sm:p-6">
-        <h3 className="font-heading text-2xl leading-tight text-ink">
+        {/* Two lines reserved: titles vary from "Procto" to "Analytics Agent
+            Evaluation Harness", and without this the taglines and blurbs sit
+            at different heights across the row. */}
+        <h3 className="font-heading text-2xl leading-tight text-ink sm:min-h-[2.5em]">
           {entry.title}
         </h3>
-        <p className={`mt-1 font-mono text-[0.68rem] tracking-wide ${accent.text}`}>
+        <p className={`mt-1 font-mono text-xs tracking-wide ${accent.text}`}>
           {entry.tagline}
         </p>
 
@@ -105,13 +108,13 @@ export default function ProjectPanel({
           {entry.tech.slice(0, 5).map((t) => (
             <li
               key={t}
-              className="border border-ink/12 px-2 py-0.5 font-mono text-[0.62rem] text-ink-faint"
+              className="border border-ink/12 px-2 py-0.5 font-mono text-micro text-ink-faint"
             >
               {t}
             </li>
           ))}
           {entry.tech.length > 5 && (
-            <li className="px-1 py-0.5 font-mono text-[0.62rem] text-ink-faint">
+            <li className="px-1 py-0.5 font-mono text-micro text-ink-faint">
               +{entry.tech.length - 5}
             </li>
           )}
@@ -122,7 +125,7 @@ export default function ProjectPanel({
             <button
               type="button"
               onClick={() => onOpen(entry)}
-              className="inline-flex items-center gap-2 bg-web-500 px-3.5 py-2 font-mono text-[0.66rem] tracking-[0.14em] text-ink uppercase transition-colors hover:bg-web-400"
+              className="inline-flex min-h-11 items-center gap-2 bg-web-500 px-4 py-2 font-mono text-micro tracking-[0.14em] text-ink uppercase transition-colors hover:bg-web-400"
             >
               <BookOpen className="h-3.5 w-3.5" aria-hidden="true" />
               Case study
@@ -136,7 +139,7 @@ export default function ProjectPanel({
               href={l.href}
               target="_blank"
               rel="noreferrer noopener"
-              className="inline-flex items-center gap-1.5 border border-ink/20 px-3 py-2 font-mono text-[0.66rem] tracking-[0.14em] text-ink-muted uppercase transition-colors hover:border-sense-500 hover:text-sense-400"
+              className="inline-flex min-h-11 items-center gap-1.5 border border-ink/20 px-3.5 py-2 font-mono text-micro tracking-[0.14em] text-ink-muted uppercase transition-colors hover:border-sense-500 hover:text-sense-400"
             >
               {l.label}
               <ArrowUpRight className="h-3 w-3" aria-hidden="true" />
