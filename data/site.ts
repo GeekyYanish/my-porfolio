@@ -6,6 +6,7 @@
 export const site = {
   name: "Yanish Rai",
   shortName: "YR",
+  url: "https://yanish.me",
   location: "Bengaluru, Karnataka, India",
   /** Short form used in the hero eyebrow and footer title block. */
   neighborhood: "Bengaluru",

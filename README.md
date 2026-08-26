@@ -79,6 +79,13 @@ of the skill web.
 Lighthouse on the production build: **Performance 94 · Accessibility 100 · Best Practices 96 ·
 SEO 100.**
 
+## SEO
+
+The canonical production origin is `https://yanish.me`. Next.js generates the sitemap, robots
+rules, web manifest, favicon, Apple touch icon, Open Graph card, and Person/WebSite structured data.
+To verify ownership in Google Search Console, set `GOOGLE_SITE_VERIFICATION` to the token from the
+HTML-tag verification method and redeploy.
+
 ## Replacing the resume
 
 The "Download Résumé" buttons serve `public/resume.pdf`. To update it, replace that file (keep the
@@ -107,12 +114,10 @@ message from the deployed site.
    Next.js defaults.
 3. Click **Deploy**. Every push to the main branch redeploys automatically.
 
-Set `metadataBase` in `app/layout.tsx` to your real domain so Open Graph URLs resolve correctly.
-
 ### Adding a custom domain
 
 1. In the Vercel dashboard, open the project → **Settings → Domains**.
-2. Add your domain (e.g. `yanishrai.dev`).
+2. Add your domain (currently `yanish.me`).
 3. At your registrar, either point the nameservers at Vercel, or add the DNS records Vercel shows
    you (an `A` record to `76.76.21.21` for the apex, and a `CNAME` to `cname.vercel-dns.com` for
    `www`).

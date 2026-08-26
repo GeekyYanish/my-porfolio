@@ -40,11 +40,66 @@ const plexMono = IBM_Plex_Mono({
 const title = `${site.name} | ${site.profession} — Data, AI & Web3`;
 const description =
   "Portfolio of Yanish Rai, building data-rich applications, AI systems, Web3 products, and analytics evaluation workflows from Bengaluru.";
+const googleSiteVerification = process.env.GOOGLE_SITE_VERIFICATION?.trim();
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${site.url}/#website`,
+      url: site.url,
+      name: `${site.name} — Portfolio`,
+      description,
+      inLanguage: "en-IN",
+      publisher: { "@id": `${site.url}/#person` },
+    },
+    {
+      "@type": "Person",
+      "@id": `${site.url}/#person`,
+      name: site.name,
+      url: site.url,
+      email: `mailto:${site.email}`,
+      jobTitle: site.profession,
+      description: site.subheadline,
+      sameAs: [site.github, site.linkedin],
+      homeLocation: {
+        "@type": "Place",
+        name: site.location,
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Bengaluru",
+          addressRegion: "Karnataka",
+          addressCountry: "IN",
+        },
+      },
+      affiliation: {
+        "@type": "CollegeOrUniversity",
+        name: "CHRIST (Deemed to be University)",
+      },
+      alumniOf: [
+        {
+          "@type": "CollegeOrUniversity",
+          name: "St. Joseph’s College",
+        },
+      ],
+      knowsAbout: [
+        "Full-stack development",
+        "Data analytics",
+        "Data engineering",
+        "Artificial intelligence systems",
+        "Web3",
+      ],
+    },
+  ],
+};
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://yanishrai.vercel.app"),
+  metadataBase: new URL(site.url),
+  applicationName: `${site.name} — Portfolio`,
   title,
   description,
+  alternates: { canonical: "/" },
   keywords: [
     "Yanish Rai",
     "Data Analyst",
@@ -59,12 +114,26 @@ export const metadata: Metadata = {
   openGraph: {
     title,
     description,
+    url: "/",
     type: "website",
     locale: "en_IN",
     siteName: `${site.name} — Portfolio`,
   },
   twitter: { card: "summary_large_image", title, description },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  ...(googleSiteVerification
+    ? { verification: { google: googleSiteVerification } }
+    : {}),
 };
 
 export const viewport: Viewport = {
@@ -82,6 +151,14 @@ export default function RootLayout({
       lang="en"
       className={`${anton.variable} ${bungee.variable} ${manrope.variable} ${plexMono.variable}`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+          }}
+        />
+      </head>
       <body className="antialiased">
         {children}
         <Analytics />
