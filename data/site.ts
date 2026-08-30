@@ -24,7 +24,7 @@ export const site = {
   availability: "Open to Full-Stack roles",
   supportLine:
     "Data analytics, AI systems, and full-stack products built with measurable engineering outcomes.",
-  email: "yanish.rai@mca.christuniversity.in",
+  email: "yanishrai24@gmail.com",
   github: "https://github.com/GeekyYanish",
   githubHandle: "GeekyYanish",
   linkedin: "https://www.linkedin.com/in/yanishrai/",
